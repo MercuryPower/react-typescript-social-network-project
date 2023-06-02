@@ -6,6 +6,7 @@ interface StyledFlexProps{
     alignItems?:string;
     justifyContent?:string;
     margin?:string;
+    padding?:string;
 }
 interface FlexProps {
     children?: React.ReactNode;
@@ -17,6 +18,7 @@ const StyledFlex = styled.div<StyledFlexProps>`
   align-items: ${props => props.alignItems || 'stretch'};
   justify-content: ${props => props.justifyContent || 'stretch'};
   margin: ${({margin}) => margin || '0'};
+  padding: ${({padding}) => padding || '0'};
 `
 const Flex = (props : FlexProps) =>{
     return <StyledFlex{...props}  />

@@ -1,7 +1,15 @@
-# Getting Started with Create React App
+# Social Network project 'Kai So' / 'Кай Со'
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Frontend stack:
+- React
+- React-Bootsrap
+- Styled-Components
+- Font Awesome
+    
+    
+    
 ## Available Scripts
 
 In the project directory, you can run:

@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {createGlobalStyle} from "styled-components";
+import 'bootstrap/dist/css/bootstrap.css';
 const Global = createGlobalStyle`
     *{
       margin: 0;
