@@ -5,6 +5,7 @@ interface StyledFlexProps{
     direction?:string;
     alignItems?:string;
     justifyContent?:string;
+    margin?:string;
 }
 interface FlexProps {
     children?: React.ReactNode;
@@ -14,11 +15,11 @@ const StyledFlex = styled.div<StyledFlexProps>`
   display: flex;
   flex-direction: ${props => props.direction || 'row'};
   align-items: ${props => props.alignItems || 'stretch'};
-  justify-content: ${props => props.justifyContent || 'flex-start'};
-    
+  justify-content: ${props => props.justifyContent || 'stretch'};
+  margin: ${({margin}) => margin || '0'};
 `
 const Flex = (props : FlexProps) =>{
-    return <StyledFlex{...props} />
+    return <StyledFlex{...props}  />
 }
 
 export default Flex;
