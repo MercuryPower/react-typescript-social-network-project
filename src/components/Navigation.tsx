@@ -4,17 +4,16 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 
-class Navigation extends Component {
-    render() {
+const Navigation = () => {
         return (
-            <Navbar expand="lg">
+            <Navbar expand="lg" className={'Nav'}>
                 <Container>
-                    <Navbar.Brand href="#home">Кёю So</Navbar.Brand>
+                    <Navbar.Brand href="#home">Kyoyu SN</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
-                            <Nav.Link href="#home">Главная</Nav.Link>
-                            <Nav.Link href="#link">О нас</Nav.Link>
+                            <Nav.Link href="#home">Main</Nav.Link>
+                            <Nav.Link href="#link">News</Nav.Link>
                             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                                 <NavDropdown.Item href="#action/3.2">
@@ -26,12 +25,12 @@ class Navigation extends Component {
                                     Separated link
                                 </NavDropdown.Item>
                             </NavDropdown>
+                            <Nav.Link href="#link">Friends</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
         );
-    }
 }
 
 export default Navigation;

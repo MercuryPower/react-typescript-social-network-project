@@ -1,17 +1,26 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import Flex from "./Flex";
 import Button from "./Button";
 import '../App.scss'
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faUser, faNewspaper, faEnvelope, faUserGroup} from "@fortawesome/free-solid-svg-icons";
+
 
 const Menu = () =>{
+        const [button, setButton] = useState([
+
+        ]);
+
         return (
-            <Flex direction={'column'} alignItems={'flex-start'}  className={['Menu','Button']} >
-                <div>
-                    <Button outlined primary>Моя страница</Button>
-                    <Button outlined primary>Новости</Button>
-                    <Button outlined primary>Сообщения</Button>
-                    <Button outlined primary>Друзья</Button>
-                </div>
+            <Flex direction={'column'} justifyContent={'space-between'} alignItems={'center'}  className={['Menu','Button']} >
+                    <Button>
+                        <FontAwesomeIcon icon={faUser} /> My page</Button>
+                    <Button>
+                        <FontAwesomeIcon icon={faNewspaper}/> News</Button>
+                    <Button>
+                        <FontAwesomeIcon icon={faEnvelope} /> Messages</Button>
+                    <Button>
+                        <FontAwesomeIcon icon={faUserGroup} /> Friends</Button>
             </Flex>
         );
 }
