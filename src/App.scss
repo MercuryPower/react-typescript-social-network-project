@@ -3,19 +3,19 @@
 
 .Nav{
   @include bgColorGradient;
-
 }
 *{
   @include fontStyle;
 }
-.Menu div{
-  margin-right: 10rem;
-  margin-left: 10rem;
-  margin-top:1.5rem;
+
+.Menu button{
+  margin: 1rem 1rem 0rem 1rem;
 }
-.Post div{
-  height:550px;
-  width: 345px;
+.Post{
+  border: 1px solid black;
+  border-radius: 25px;
+  height:auto;
+  width: 400px;
 }
 .PostBox{
   @include contentBox;

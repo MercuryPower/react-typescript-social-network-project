@@ -1,4 +1,6 @@
 @mixin bgColorGradient{
+  display: flex;
+  justify-content: center;
   color:white;
   background: rgb(2,0,36);
   background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(135,135,212,1) 50%, rgba(126,199,214,1) 100%);
@@ -6,10 +8,10 @@
 
 @mixin fontStyle {
   font-family: 'Rubik', sans-serif;
-  font-size:15px;
 }
 
 @mixin contentBox{
+  width: 600px;
   border: 1px solid black;
   border-radius: 25px;
 }

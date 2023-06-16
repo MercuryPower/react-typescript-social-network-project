@@ -7,14 +7,15 @@ interface StyledButtonProps{
     alignSelf?:string;
     color?:string;
     background?:string;
+    margin?:string,
+    padding?:string,
     font?:string;
-}
-interface ButtonProps {
+    radius?:string;
     children: React.ReactNode;
-    small?: boolean;
+    onClick?:(e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-const StyledButton = styled.div<StyledButtonProps>`
+const StyledButton = styled.button<StyledButtonProps>`
   border:0;
   font-size:15px;
   padding: 1rem; 
@@ -23,6 +24,11 @@ const StyledButton = styled.div<StyledButtonProps>`
   align-self: ${props => props.alignSelf || 'stretch'};
     
   
+  ${props => css`
+    margin:${props.margin};
+    padding:${props.padding};
+  `}
+  
   ${props => props.small && css`
     font-size:${props.font || '12px'};
   `}
@@ -30,6 +36,7 @@ const StyledButton = styled.div<StyledButtonProps>`
   ${props => css`
     color:${props.color || 'black'};
     background: transparent;
+    border-radius: ${props.radius};
   `}
   &:hover{
     ${props => css`
@@ -40,7 +47,7 @@ const StyledButton = styled.div<StyledButtonProps>`
   }
   
 `;
-const Button = (props : ButtonProps) => {
+const Button = (props : StyledButtonProps) => {
     return <StyledButton{...props} />
 }
 

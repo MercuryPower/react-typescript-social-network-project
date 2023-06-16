@@ -4,9 +4,14 @@ import styled, {createGlobalStyle} from 'styled-components';
 import Flex from './components/Flex';
 import Navigation from "./components/Navigation";
 import Menu from "./components/Menu";
-import Post from "./components/Post";
+import Post, {PostProps} from "./components/Post";
 import "./App.scss";
-import AddNewPost from "./components/AddNewPost";
+import CreateANewPost, {CreateANewPostProps} from "./components/CreateANewPost";
+import PostList from "./components/PostList";
+import Input from "./UI/Input/Input";
+import Button from "./UI/Button/Button";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCheck} from "@fortawesome/free-solid-svg-icons";
 
 const AppWrapper = styled.div`
   width: 100%;
@@ -20,6 +25,11 @@ function App() {
         {id:2, title:'JS', body:'Text2'},
         {id:3, title:'TYPESCRIPT', body:'TEXT3'},
     ]);
+
+    const createPost = (newPost: any)  => { // пофиксить any type
+        setPosts([...posts, newPost])
+    }
+
     return (
       <div>
       <AppWrapper>
@@ -32,13 +42,9 @@ function App() {
               </div>
               <div>
                   <br/>
-                  <AddNewPost/>
+                    <CreateANewPost create={createPost} />
                   <br/>
-                      <div>
-                          {posts.map(post =>
-                              <Post id={post.id} title={post.title}   />
-                          )}
-                      </div>
+                    <PostList posts={posts}/>
               </div>
               <div>
                   <Menu />
