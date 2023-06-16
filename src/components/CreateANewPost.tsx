@@ -17,11 +17,12 @@ const CreateANewPost:React.FC<CreateANewPostProps> = ({create}) => {
     const addNewPost = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         const newPost: PostProps = {
-            ...post, id:Date.now(), title:'New Post'
+            ...post, id:Date.now(), title:'New Post', remove:() => {},
         }
         create(newPost);
         setPost({body:''})
     }
+
         return (
             <Flex justifyContent={'center'} alignItems={'center'} padding={'15px'} className={'PostBox'}>
                 <form action="">

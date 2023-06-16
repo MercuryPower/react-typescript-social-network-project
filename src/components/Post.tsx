@@ -5,28 +5,30 @@ import Button from "../UI/Button/Button";
 import styled from "styled-components";
 
 export interface PostProps {
-    id?:number,
-    title?:string,
-    body?:string,
-    post?: PostProps,
-    number?: number,
-    children?: React.ReactNode
+    id?:number;
+    title?:string;
+    body?:string;
+    number?: number;
+    remove:(post: PostProps) => void;
 }
 
 const Post = (props : PostProps) => {
-        return (
-                <Flex classname={'Post'} justifyContent={'space-between'} alignItems={'center'}  padding={'15px'}>
+    const handleRemove = () => {
+        props.remove(props);
+    };
+    return (
+            <Flex className={'Post'} justifyContent={'space-between'} alignItems={'center'} margin={'15px'}  padding={'15px'}>
+                <div>
+                    <strong>{props.number}. {props.title}</strong>
                     <div>
-                        <strong>{props.number}. {props.title}</strong>
-                        <div>
-                            {props.body}
-                        </div>
+                        {props.body}
                     </div>
-                    <div>
-                        <Button>Удалить</Button>
-                    </div>
-                </Flex>
-        );
+                </div>
+                <div>
+                    <Button onClick={handleRemove}>Удалить</Button>
+                </div>
+            </Flex>
+    );
 }
 
 export default Post;

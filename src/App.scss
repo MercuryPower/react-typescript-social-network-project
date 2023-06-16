@@ -12,10 +12,10 @@
   margin: 1rem 1rem 0rem 1rem;
 }
 .Post{
+  display: flex;
   border: 1px solid black;
   border-radius: 25px;
-  height:auto;
-  width: 400px;
+  height: 600px;
 }
 .PostBox{
   @include contentBox;
