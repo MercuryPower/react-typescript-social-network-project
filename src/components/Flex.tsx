@@ -9,7 +9,6 @@ interface StyledFlexProps{
     padding?:string;
 }
 interface FlexProps {
-    children?: React.ReactNode;
     [key: string]: any;
 }
 const StyledFlex = styled.div<StyledFlexProps>`

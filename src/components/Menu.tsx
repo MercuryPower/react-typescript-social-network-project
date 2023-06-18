@@ -4,7 +4,11 @@ import Button from "../UI/Button/Button";
 import '../App.scss'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faUser, faNewspaper, faEnvelope, faUserGroup} from "@fortawesome/free-solid-svg-icons";
+import styled from "styled-components";
 
+const StyledMenu = styled.div`
+    
+`
 
 const Menu = () =>{
         const [button, setButton] = useState([
@@ -12,7 +16,7 @@ const Menu = () =>{
         ]);
 
         return (
-            <Flex direction={'column'} justifyContent={'space-evenly'} alignItems={'center'}  className={['Menu','Button']} >
+            <Flex direction={'column'} justifyContent={'space-evenly'} alignItems={'center'}  className={'Menu'} >
                 <Button>
                     <FontAwesomeIcon icon={faUser} /> My page</Button>
                 <Button>

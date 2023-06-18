@@ -18,16 +18,18 @@ const AppWrapper = styled.div`
   min-height: 100vh;
   background: white;
 `
-
 function App() {
     const [posts, setPosts] = useState([
-        {id:1, title:'REACT', body:'Text'},
-        {id:2, title:'JS', body:'Text2'},
-        {id:3, title:'TYPESCRIPT', body:'TEXT3'},
+        {id:1, title:'REACT', body:'Text', remove:() => {}},
+        {id:2, title:'JS', body:'Text2', remove:() => {}},
+        {id:3, title:'TYPESCRIPT', body:'TEXT3', remove:() => {}},
     ]);
 
     const createPost = (newPost: any)  => { // пофиксить any type
         setPosts([...posts, newPost])
+    }
+    const removePost = (post: PostProps) => {
+        setPosts(posts.filter((p) => p.id !== post?.id))
     }
 
     return (
@@ -36,18 +38,24 @@ function App() {
           <div>
             <Navigation/>
           </div>
-          <Flex justifyContent={'center'} >
+          <Flex justifyContent={'center'}>
               <div>
                   <Menu/>
               </div>
               <div>
                   <br/>
-                    <CreateANewPost create={createPost} />
+                    <CreateANewPost  create={createPost} />
                   <br/>
-                    <PostList posts={posts}/>
-              </div>
-              <div>
-                  <Menu />
+                  {posts.length !== 0
+                      ?
+                      <PostList remove={removePost} posts={posts}/>
+                      :
+                      <Flex justifyContent={'center'} padding={'15px'}>
+                          <h2>There are no posts :(</h2>
+                      </Flex>
+                  }
+
+
               </div>
           </Flex>
       </AppWrapper>
