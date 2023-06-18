@@ -57,9 +57,6 @@ function App() {
 
 
               </div>
-              <div>
-                  <Menu />
-              </div>
           </Flex>
       </AppWrapper>
       </div>

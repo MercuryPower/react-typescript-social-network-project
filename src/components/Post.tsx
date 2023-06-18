@@ -3,7 +3,23 @@ import Flex from "./Flex";
 import '../App.scss'
 import Button from "../UI/Button/Button";
 import styled from "styled-components";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faTrashCan} from "@fortawesome/free-solid-svg-icons";
+import ModalWindow from "../UI/Modal/ModalWindow";
 
+const StyledPost = styled.div`
+    padding:1rem;
+    margin:1rem;
+    border: 1px solid black;
+    border-radius: 25px;
+    height: 30em;
+    max-width: 30rem;
+    flex-wrap: nowrap;
+    overflow-wrap: break-word;
+`
+const StyledPostText = styled.p`
+    font-size:18px;
+`
 export interface PostProps {
     id?:number;
     title?:string;
@@ -17,17 +33,17 @@ const Post = (props : PostProps) => {
         props.remove(props);
     };
     return (
-            <Flex className={'Post'} justifyContent={'space-between'} alignItems={'center'} margin={'15px'}  padding={'15px'}>
-                <div>
-                    <strong>{props.number}. {props.title}</strong>
+            <StyledPost>
+                <Flex justifyContent={'space-between'} alignItems={'center'}>
                     <div>
-                        {props.body}
+                        <h4><strong>{props.number}. {props.title}</strong></h4>
                     </div>
-                </div>
-                <div>
-                    <Button onClick={handleRemove}>Удалить</Button>
-                </div>
-            </Flex>
+                    <div>
+                        <Button onClick={handleRemove} radius={'25px'}><FontAwesomeIcon icon={faTrashCan} /></Button>
+                    </div>
+                </Flex>
+                <StyledPostText>{props.body}</StyledPostText>
+            </StyledPost>
     );
 }
 
