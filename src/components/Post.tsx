@@ -5,7 +5,6 @@ import Button from "../UI/Button/Button";
 import styled from "styled-components";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrashCan} from "@fortawesome/free-solid-svg-icons";
-import ModalWindow from "../UI/Modal/ModalWindow";
 
 const StyledPost = styled.div`
     padding:1rem;
@@ -14,6 +13,7 @@ const StyledPost = styled.div`
     border-radius: 25px;
     height: 30em;
     max-width: 30rem;
+    justify-content: center;
     flex-wrap: nowrap;
     overflow-wrap: break-word;
 `
