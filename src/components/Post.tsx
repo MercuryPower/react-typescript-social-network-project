@@ -14,6 +14,7 @@ const StyledPost = styled.div`
     border-radius: 25px;
     height: 30em;
     max-width: 30rem;
+    justify-content: center;
     flex-wrap: nowrap;
     overflow-wrap: break-word;
 `

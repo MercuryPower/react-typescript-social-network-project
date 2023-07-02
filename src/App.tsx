@@ -8,10 +8,7 @@ import Post, {PostProps} from "./components/Post";
 import "./App.scss";
 import CreateANewPost, {CreateANewPostProps} from "./components/CreateANewPost";
 import PostList from "./components/PostList";
-import Input from "./UI/Input/Input";
-import Button from "./UI/Button/Button";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCheck} from "@fortawesome/free-solid-svg-icons";
+import Select from "./UI/Select/Select";
 
 const AppWrapper = styled.div`
   width: 100%;
@@ -25,11 +22,17 @@ function App() {
         {id:3, title:'TYPESCRIPT', body:'TEXT3', remove:() => {}},
     ]);
 
+    const [selectedSort, setSelectedSort] = useState('')
     const createPost = (newPost: any)  => { // пофиксить any type
         setPosts([...posts, newPost])
     }
     const removePost = (post: PostProps) => {
         setPosts(posts.filter((p) => p.id !== post?.id))
+    }
+
+    const sortPosts = (sort) => {
+        setSelectedSort(sort)
+        setPosts([...posts].sort((a, b) => a[sort].localeCompare(b[sort])))
     }
 
     return (
@@ -45,6 +48,10 @@ function App() {
               <div>
                   <br/>
                     <CreateANewPost  create={createPost} />
+                    <Select value={selectedSort} onChange={sortPosts} defaultValue='Choose one'  options={[
+                        {value:'title', title: 'name'},
+                        {value:'body', title: 'description'},
+                    ]}/>
                   <br/>
                   {posts.length !== 0
                       ?
