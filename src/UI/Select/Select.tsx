@@ -1,6 +1,10 @@
 import React from 'react';
 import styled from "styled-components";
+<<<<<<< HEAD
 import {faBars, faSort} from "@fortawesome/free-solid-svg-icons";
+=======
+import {faBars} from "@fortawesome/free-solid-svg-icons";
+>>>>>>> 82e66c356a9a9fbcda28a793477d1f1a07e66901
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 
