@@ -30,9 +30,9 @@ function App() {
         setPosts(posts.filter((p) => p.id !== post?.id))
     }
 
-    const sortPosts = (sort) => {
+    const sortPosts = (sort:string) => {
         setSelectedSort(sort)
-        setPosts([...posts].sort((a, b) => a[sort].localeCompare(b[sort])))
+        setPosts([...posts].sort((a, b) => (a as any)[sort].localeCompare((b as any)[sort])))
     }
 
     return (
@@ -53,16 +53,16 @@ function App() {
                         {value:'body', title: 'description'},
                     ]}/>
                   <br/>
-                  {posts.length !== 0
-                      ?
-                      <PostList remove={removePost} posts={posts}/>
-                      :
-                      <Flex justifyContent={'center'} padding={'15px'}>
-                          <h2>There are no posts :(</h2>
-                      </Flex>
-                  }
-
-
+                  <div>
+                      {posts.length !== 0
+                          ?
+                          <PostList remove={removePost} posts={posts}/>
+                          :
+                          <Flex justifyContent={'center'} padding={'15px'}>
+                              <h2>There are no posts :(</h2>
+                          </Flex>
+                      }
+                  </div>
               </div>
           </Flex>
       </AppWrapper>

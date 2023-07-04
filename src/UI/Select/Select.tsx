@@ -1,4 +1,12 @@
 import React from 'react';
+import styled from "styled-components";
+import {faBars} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+
+
+const StyledSelect = styled.select`
+    border-radius: 25px;
+`
 
 export type SelectProps = {
     value:string;
@@ -13,18 +21,18 @@ type Option = {
 const Select = ({options, defaultValue, value, onChange}:SelectProps) => {
     return (
         <div style={{marginTop:'20px'}}>
-            Sort by {''}
-            <select
+            <FontAwesomeIcon icon={faBars} /> Sort by {''}
+            <StyledSelect
                 value={value}
                 onChange={event => onChange(event.target.value)}
             >
                 <option disabled value=''>{defaultValue}</option>
                 {options.map(option=>
                     <option key={option.value} value={option.value}>
-                        {option.title};
+                        {option.title}
                     </option>
                 )}
-            </select>
+            </StyledSelect>
         </div>
     );
 };
