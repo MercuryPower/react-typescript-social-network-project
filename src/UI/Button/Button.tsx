@@ -34,15 +34,15 @@ const StyledButton = styled.button<StyledButtonProps>`
   `}
   
   ${props => css`
-    color:${props.color || 'black'};
+    color:${props.color || 'white'};
     background: transparent;
     border-radius: ${props.radius};
   `}
   &:hover{
     ${props => css`
-      color:${props.color || 'white'};
-      background: ${props.background || 'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(135,135,212,1) 50%, rgba(126,199,214,1) 100%)'};
-      transition: ease-out 0.3s;
+      color:${props.color || 'black'};
+      background: ${props.background || 'white'};
+      transition: ease-in 0.3s;
     `}
   }
   

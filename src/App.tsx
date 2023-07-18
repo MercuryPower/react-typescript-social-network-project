@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styled, {createGlobalStyle} from 'styled-components';
 import Flex from './components/Flex';
@@ -6,7 +6,7 @@ import Navigation from "./components/Navigation";
 import Menu from "./components/Menu";
 import Post, {PostProps} from "./components/Post";
 import "./App.scss";
-import CreateANewPost, {CreateANewPostProps} from "./components/CreateANewPost";
+import CreateANewPost from "./components/CreateANewPost";
 import PostList from "./components/PostList";
 import Select from "./UI/Select/Select";
 
@@ -23,6 +23,22 @@ function App() {
     ]);
 
     const [selectedSort, setSelectedSort] = useState('')
+    const [searchQuery, setSearchQuery] = useState('')
+
+    const handleSearchQueryChange = (newSearchQuery: string) => {
+        setSearchQuery(newSearchQuery);
+    };
+    const sortedPosts = useMemo(() => {
+        if(selectedSort){
+            return [...posts].sort((a, b) => (a as any)[selectedSort].localeCompare((b as any)[selectedSort]))
+        }
+        return posts;
+    }, [selectedSort, posts])
+
+    const sortedAndSearchedPosts = useMemo(() => {
+        return sortedPosts.filter(post => post.body.includes(searchQuery))
+    }, [searchQuery, sortedPosts])
+
     const createPost = (newPost: any)  => { // пофиксить any type
         setPosts([...posts, newPost])
     }
@@ -32,14 +48,13 @@ function App() {
 
     const sortPosts = (sort:string) => {
         setSelectedSort(sort)
-        setPosts([...posts].sort((a, b) => (a as any)[sort].localeCompare((b as any)[sort])))
     }
 
     return (
       <div>
       <AppWrapper>
           <div>
-            <Navigation/>
+            <Navigation onSearchQueryChange={handleSearchQueryChange}/>
           </div>
           <Flex justifyContent={'center'}>
               <div>
@@ -47,7 +62,7 @@ function App() {
               </div>
               <div>
                   <br/>
-                    <CreateANewPost  create={createPost} />
+                    <CreateANewPost create={createPost} />
                     <Select value={selectedSort} onChange={sortPosts} defaultValue='Choose one'  options={[
                         {value:'title', title: 'name'},
                         {value:'body', title: 'description'},
@@ -56,7 +71,7 @@ function App() {
                   <div>
                       {posts.length !== 0
                           ?
-                          <PostList remove={removePost} posts={posts}/>
+                          <PostList remove={removePost} posts={sortedAndSearchedPosts}/>
                           :
                           <Flex justifyContent={'center'} padding={'15px'}>
                               <h2>There are no posts :(</h2>

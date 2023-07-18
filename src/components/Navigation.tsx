@@ -3,13 +3,26 @@ import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import Input from "../UI/Input/Input";
+import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons/faMagnifyingGlass";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import Flex from "./Flex";
 
 {/*Kyoyu SN*/}
-const Navigation = () => {
+
+interface NavigationProps {
+    onSearchQueryChange?:(newSearchQuery:string) => void;
+}
+const Navigation:React.FC<NavigationProps> = (props) => {
+    const handleInputChange =(e: React.ChangeEvent<HTMLInputElement>) => {
+        if(props.onSearchQueryChange){
+            props.onSearchQueryChange(e.target.value);
+        }
+    }
         return (
             <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
                 <Container>
-                    <Navbar.Brand href="#home">Kyoyu SN</Navbar.Brand>
+                    <Navbar.Brand href= "#home">Kyoyu SN</Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="me-auto">
@@ -28,10 +41,10 @@ const Navigation = () => {
                             </NavDropdown>
                         </Nav>
                         <Nav>
-                            <Nav.Link href="#deets">More deets</Nav.Link>
-                            <Nav.Link eventKey={2} href="#memes">
-                                Dank memes
-                            </Nav.Link>
+                            <Flex alignItems={'center'}>
+                                <FontAwesomeIcon icon={faMagnifyingGlass} />
+                                <Input onChange={handleInputChange}  placeholder={'Search'}></Input>
+                            </Flex>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
