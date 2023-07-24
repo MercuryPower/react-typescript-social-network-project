@@ -26,8 +26,8 @@ const CreateANewPost:React.FC<CreateANewPostProps> = ({create}) => {
         return (
             <Flex justifyContent={'center'} alignItems={'center'} padding={'15px'} className={'PostBox'}>
                 <form action="">
-                    Hi!
-                    <Input value={post.body} onChange={(e:React.ChangeEvent<HTMLInputElement>) => setPost({...post, body: e.target.value})}/>
+                    <span>Hi!</span>
+                    <Input placeholder={`What's new?`} value={post.body} onChange={(e:React.ChangeEvent<HTMLInputElement>) => setPost({...post, body: e.target.value})}/>
                     <Button margin={'0rem 1rem'} small onClick={addNewPost} radius={'25px'} >
                         <FontAwesomeIcon icon={faCheck} size={'lg'}/>
                     </Button>

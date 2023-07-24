@@ -16,6 +16,8 @@ const StyledPost = styled.div`
     justify-content: center;
     flex-wrap: nowrap;
     overflow-wrap: break-word;
+    background: linear-gradient(90deg, rgba(89, 83, 255, 0.8) 0%, rgba(135, 135, 212, 1) 50%, rgba(126, 199, 214, 1) 100%);
+    color:white;
 `
 const StyledPostText = styled.p`
     font-size:18px;

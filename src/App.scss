@@ -14,4 +14,7 @@
 .PostBox{
   @include contentBox;
 }
+.PostBox span{
+  color:white;
+}
 

@@ -17,13 +17,13 @@ const Menu = () =>{
 
         return (
             <Flex direction={'column'} justifyContent={'space-evenly'} alignItems={'center'}  className={'Menu'} >
-                <Button>
+                <Button color={'black'}>
                     <FontAwesomeIcon icon={faUser} /> My page</Button>
-                <Button>
+                <Button color={'black'}>
                     <FontAwesomeIcon icon={faNewspaper}/> News</Button>
-                <Button>
+                <Button color={'black'}>
                     <FontAwesomeIcon icon={faEnvelope} /> Messages</Button>
-                <Button>
+                <Button color={'black'}>
                     <FontAwesomeIcon icon={faUserGroup} /> Friends</Button>
             </Flex>
         );
