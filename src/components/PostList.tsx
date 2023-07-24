@@ -7,8 +7,15 @@ interface PostListProps {
     remove: (post: PostProps) => void;
 }
 const PostList = ({posts, remove}: PostListProps)=> {
+    if(!posts.length){
+        return (
+        <Flex justifyContent={'center'} padding={'15px'}>
+            <h2>There are no posts here :(</h2>
+        </Flex>
+        )
+    }
     return (
-        <Flex direction={'column'} justifyContent={'space-between'} padding={'15px'}>
+        <Flex direction={'column'} justifyContent={'center'} padding={'15px'}>
             {posts.map((post: PostProps, index: number) =>
                 <Post key={post.id} number={index + 1} {...post} remove={remove} />
             )}

@@ -1,7 +1,20 @@
 import React, {useState} from 'react';
 import Button from "../Button/Button";
 import {Modal} from "react-bootstrap";
+import styled from "styled-components";
 
+interface ModalProps {
+    show:boolean
+}
+
+const StyledModalWindow = styled.div<ModalProps>`
+  position: fixed;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: ${(props) => (props.show ? 'block' : 'none')}
+`
 const ModalWindow = () => {
     const [show, setShow] = useState(true);
 
@@ -10,7 +23,7 @@ const ModalWindow = () => {
 
     return (
         <>
-            <Modal show={show} onHide={handleClose}>
+            <StyledModalWindow show={show}>
                 <Modal.Header closeButton>
                     <Modal.Title>Are you sure?</Modal.Title>
                 </Modal.Header>
@@ -23,7 +36,7 @@ const ModalWindow = () => {
                         Nope.
                     </Button>
                 </Modal.Footer>
-            </Modal>
+            </StyledModalWindow>
         </>
     );
 };

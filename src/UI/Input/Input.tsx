@@ -13,9 +13,7 @@ const StyledInput = styled.input`
   margin-left: 0.75rem;
   width: min-content;
   box-shadow: 2px 2px 2px rgba(0, 0, 255, .2);
-  background: #000000;
   padding:5px;
-  color: #FFFFFF;
   border-radius: 10px;
 `
 const Input = (props : StyledInputProps) => {

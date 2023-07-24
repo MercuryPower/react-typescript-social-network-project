@@ -9,6 +9,7 @@ import "./App.scss";
 import CreateANewPost from "./components/CreateANewPost";
 import PostList from "./components/PostList";
 import Select from "./UI/Select/Select";
+import PostFilter from "./components/PostFilter";
 
 const AppWrapper = styled.div`
   width: 100%;
@@ -22,21 +23,21 @@ function App() {
         {id:3, title:'TYPESCRIPT', body:'TEXT3', remove:() => {}},
     ]);
 
-    const [selectedSort, setSelectedSort] = useState('')
-    const [searchQuery, setSearchQuery] = useState('')
+    const [filter, setFilter] = useState({sort:''});
+    const [searchQuery, setSearchQuery] = useState('');
 
     const handleSearchQueryChange = (newSearchQuery: string) => {
         setSearchQuery(newSearchQuery);
     };
     const sortedPosts = useMemo(() => {
-        if(selectedSort){
-            return [...posts].sort((a, b) => (a as any)[selectedSort].localeCompare((b as any)[selectedSort]))
+        if(filter.sort){
+            return [...posts].sort((a, b) => (a as any)[filter.sort].localeCompare((b as any)[filter.sort]))
         }
         return posts;
-    }, [selectedSort, posts])
+    }, [filter.sort, posts])
 
     const sortedAndSearchedPosts = useMemo(() => {
-        return sortedPosts.filter(post => post.body.includes(searchQuery))
+        return sortedPosts.filter(post => post.body.toLowerCase().includes(searchQuery))
     }, [searchQuery, sortedPosts])
 
     const createPost = (newPost: any)  => { // пофиксить any type
@@ -46,9 +47,6 @@ function App() {
         setPosts(posts.filter((p) => p.id !== post?.id))
     }
 
-    const sortPosts = (sort:string) => {
-        setSelectedSort(sort)
-    }
 
     return (
       <div>
@@ -63,20 +61,9 @@ function App() {
               <div>
                   <br/>
                     <CreateANewPost create={createPost} />
-                    <Select value={selectedSort} onChange={sortPosts} defaultValue='Choose one'  options={[
-                        {value:'title', title: 'name'},
-                        {value:'body', title: 'description'},
-                    ]}/>
-                  <br/>
+                    <PostFilter filter={filter} setFilter={setFilter} />
                   <div>
-                      {posts.length !== 0
-                          ?
-                          <PostList remove={removePost} posts={sortedAndSearchedPosts}/>
-                          :
-                          <Flex justifyContent={'center'} padding={'15px'}>
-                              <h2>There are no posts :(</h2>
-                          </Flex>
-                      }
+                      <PostList remove={removePost} posts={sortedAndSearchedPosts}/>
                   </div>
               </div>
           </Flex>
