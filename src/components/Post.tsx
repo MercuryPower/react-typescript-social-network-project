@@ -5,6 +5,7 @@ import Button from "../UI/Button/Button";
 import styled from "styled-components";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrashCan} from "@fortawesome/free-solid-svg-icons";
+import ModalWindow from "../UI/Modal/ModalWindow";
 
 const StyledPost = styled.div`
     padding:1rem;
@@ -31,21 +32,32 @@ export interface PostProps {
 }
 
 const Post = (props : PostProps) => {
+    const [modalShow, setModalShow] = useState(false)
+
+    const handleCloseModal = () => {
+        setModalShow(false); // Close the modal when the "Nope" button is clicked
+    };
+    const handleShowModal = () =>{
+        setModalShow(true);
+    }
     const handleRemove = () => {
-        props.remove(props);
+        props.remove(props)
     };
     return (
+        <>
             <StyledPost>
                 <Flex justifyContent={'space-between'} alignItems={'center'}>
                     <div>
                         <h4><strong>{props.number}. {props.title}</strong></h4>
                     </div>
                     <div>
-                        <Button onClick={handleRemove} radius={'25px'}><FontAwesomeIcon icon={faTrashCan} /></Button>
+                        <Button  onClick={handleShowModal} radius={'25px'}><FontAwesomeIcon icon={faTrashCan} /></Button>
                     </div>
                 </Flex>
                 <StyledPostText>{props.body}</StyledPostText>
             </StyledPost>
+        <ModalWindow show={modalShow} onClose={handleCloseModal} onConfirm={handleRemove} />
+        </>
     );
 }
 
