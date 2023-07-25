@@ -20,6 +20,7 @@ const PostList = ({posts, remove}: PostListProps)=> {
                 <Post key={post.id} number={index + 1} {...post} remove={remove} />
             )}
         </Flex>
+
     );
 };
 

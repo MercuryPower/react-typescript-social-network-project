@@ -22,7 +22,7 @@ const Navigation:React.FC<NavigationProps> = (props) => {
         return (
             <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
                 <Container>
-                    <Navbar.Brand href= "#home">Kyoyu SN</Navbar.Brand>
+                    <Navbar.Brand href= "#home"><b>KSN</b> - Social Network</Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="me-auto">

@@ -11,6 +11,9 @@ interface StyledButtonProps{
     padding?:string,
     font?:string;
     radius?:string;
+    yesBtn?:boolean;
+    noBtn?:boolean;
+    reversed?:boolean;
     children: React.ReactNode;
     onClick?:(e: React.MouseEvent<HTMLButtonElement>) => void;
 }
@@ -22,7 +25,6 @@ const StyledButton = styled.button<StyledButtonProps>`
   cursor: pointer;
   box-shadow: 3px 3px  rgba(0, 0, 255, .2);
   align-self: ${props => props.alignSelf || 'stretch'};
-    
   
   ${props => css`
     margin:${props.margin};
@@ -35,16 +37,22 @@ const StyledButton = styled.button<StyledButtonProps>`
   
   ${props => css`
     color:${props.color || 'white'};
-    background: transparent;
+    background: ${props.background || 'transparent'};
     border-radius: ${props.radius};
   `}
-  &:hover{
-    ${props => css`
-      color:${props.color || 'black'};
-      background: ${props.background || 'white'};
-      transition: ease-in 0.3s;
-    `}
+  &:hover {
+    color: ${props => (props.color === 'white' ? 'black' : 'white')};
+    background: ${props => (props.color === 'white' ? 'white' : 'black')};
+    transition: ease-in 0.3s;
   }
+    
+    
+  ${props => props.yesBtn && css`
+    background: rgba(102, 255, 102, 1) 50%;
+  `}
+  ${props => props.noBtn && css`
+    background:rgba(255, 102, 102, 1) 50%;
+  `}
   
 `;
 const Button = (props : StyledButtonProps) => {
