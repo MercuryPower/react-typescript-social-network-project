@@ -14,7 +14,6 @@ const StyledMenu = styled(Flex)`
     }
   
   button{
-    border: 1px solid black;
     width: 150px;
     margin: 5px;
     height: 50px;
