@@ -103,6 +103,14 @@ const ModalWindow:React.FC<ModalProps> = ({show, onConfirm, onClose, children, c
                         </Button>
                         <Button background={'black'} color={'white'} radius={'25px'} onClick={onClose}>
                             <FontAwesomeIcon icon={faX} /><b>{cancelButtonText}</b>
+                   Are you sure?
+                    The data will be lost.
+                    <Flex justifyContent={'center'} alignItems={'center'} margin={'15px'}>
+                        <Button color={'black'}  radius={'25px'} margin={'0 10px 0 0'} onClick={handleYes}>
+                            <FontAwesomeIcon icon={faCheck} /><b> Delete this post </b>
+                        </Button>
+                        <Button background={'black'} color={'white'} radius={'25px'}  onClick={handleClose}>
+                            <FontAwesomeIcon icon={faX} /><b> Close </b>
                         </Button>
                     </Flex>
                 </ModalContent>
