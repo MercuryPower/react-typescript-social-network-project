@@ -16,6 +16,12 @@ const AppWrapper = styled.div`
   min-height: 100vh;
   background: white;
 `
+const MenuWrapper = styled.div`
+  max-height: 300px; /* Задайте ширину контента по своему усмотрению */
+  padding: 20px;
+`
+
+
 function App() {
     const [posts, setPosts] = useState([
         {id:1, title:'REACT', body:'Text', remove:() => {}},
@@ -49,26 +55,26 @@ function App() {
 
 
     return (
-      <div>
       <AppWrapper>
           <div>
             <Navigation onSearchQueryChange={handleSearchQueryChange}/>
           </div>
-          <Flex justifyContent={'center'}>
-              <div>
-                  <Menu/>
-              </div>
-              <div>
-                  <br/>
-                    <CreateANewPost create={createPost} />
-                    <PostFilter filter={filter} setFilter={setFilter} />
+          <div>
+              <Flex justifyContent={'center'}>
+                  <MenuWrapper>
+                      <Menu/>
+                  </MenuWrapper>
                   <div>
-                      <PostList remove={removePost} posts={sortedAndSearchedPosts}/>
+                      <br/>
+                      <div>
+                          <CreateANewPost create={createPost} />
+                          <PostFilter filter={filter} setFilter={setFilter} />
+                          <PostList remove={removePost} posts={sortedAndSearchedPosts}/>
+                      </div>
                   </div>
-              </div>
-          </Flex>
+              </Flex>
+          </div>
       </AppWrapper>
-      </div>
   );
 }
 

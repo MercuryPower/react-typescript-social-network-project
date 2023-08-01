@@ -5,27 +5,46 @@ import '../App.scss'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faUser, faNewspaper, faEnvelope, faUserGroup} from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
+import Li from "../UI/Li/Li";
 
-const StyledMenu = styled.div`
-    
+const StyledMenu = styled(Flex)`
+  display: flex;
+  ol{
+      padding: 0;
+    }
+  
+  button{
+    border: 1px solid black;
+    width: 150px;
+    margin: 5px;
+    height: 50px;
+    border-radius: 5px;
+  }
 `
 
 const Menu = () =>{
-        const [button, setButton] = useState([
 
-        ]);
+        const menuItems = [
+            { icon: faUser, text:'My page'},
+            { icon: faNewspaper, text:'News'},
+            { icon: faEnvelope, text:'Messages'},
+            { icon: faUserGroup, text:'Friends'},
+    ];
 
         return (
-            <Flex direction={'column'} justifyContent={'space-evenly'} alignItems={'center'}  className={'Menu'} >
-                <Button color={'black'}>
-                    <FontAwesomeIcon icon={faUser} /> My page</Button>
-                <Button color={'black'}>
-                    <FontAwesomeIcon icon={faNewspaper}/> News</Button>
-                <Button color={'black'}>
-                    <FontAwesomeIcon icon={faEnvelope} /> Messages</Button>
-                <Button color={'black'}>
-                    <FontAwesomeIcon icon={faUserGroup} /> Friends</Button>
-            </Flex>
+            <StyledMenu alignItems={'center'}>
+                <nav>
+                    <ol>
+                        {menuItems.map((item, index) => (
+                            <Li key={index}>
+                                <Button color={'black'}>
+                                    <FontAwesomeIcon icon={item.icon} /> {item.text}
+                                </Button>
+                            </Li>
+                        ))}
+                    </ol>
+                </nav>
+            </StyledMenu>
         );
 }
 
