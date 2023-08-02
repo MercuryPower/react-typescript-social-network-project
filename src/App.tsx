@@ -12,6 +12,7 @@ import Select from "./UI/Select/Select";
 import PostFilter from "./components/PostFilter";
 import {usePosts, useSortedPosts} from "./hooks/usePosts";
 import axios from "axios";
+import LoadingSpinner from "./UI/Loading Spinner/LoadingSpinner";
 
 const AppWrapper = styled.div`
   width: 100%;
@@ -29,12 +30,21 @@ function App() {
     const [filter, setFilter] = useState({sort:''});
     const [searchQuery, setSearchQuery] = useState('');
     const sortedAndSearchedPosts = usePosts(posts, filter.sort, searchQuery);
+    const [isPostsLoading, setIsPostsLoading] = useState(false);
 
     useEffect(() => {
-        fetch('https://jsonplaceholder.typicode.com/posts')
-            .then(response => response.json())
-            .then(data => setPosts(data))
-            .catch(error => console.error(error));
+        const fetchData = async () => {
+            try{
+                setIsPostsLoading(true);
+                const response = await axios.get('https://jsonplaceholder.typicode.com/posts');
+                const data = await response.data;
+                setPosts(data);
+                setIsPostsLoading(false);
+            } catch(e){
+                console.error(e);
+            }
+        }
+        fetchData();
     }, []);
 
     const handleSearchQueryChange = (newSearchQuery: string) => {
@@ -64,7 +74,7 @@ function App() {
                       <div>
                           <CreateANewPost create={createPost} />
                           <PostFilter filter={filter} setFilter={setFilter} />
-                          <PostList remove={removePost} posts={sortedAndSearchedPosts}/>
+                          <PostList remove={removePost} posts={sortedAndSearchedPosts} isPostsLoading={isPostsLoading}/>
                       </div>
                   </div>
               </Flex>

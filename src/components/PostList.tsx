@@ -3,6 +3,12 @@ import Flex from "./Flex";
 import Post, {PostProps} from "./Post";
 import {TransitionGroup, CSSTransition} from "react-transition-group";
 import styled from "styled-components";
+import LoadingSpinner from "../UI/Loading Spinner/LoadingSpinner";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faFontAwesome, faRotateRight} from "@fortawesome/free-solid-svg-icons";
+import Span from "../UI/Span/Span";
+import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons/faMagnifyingGlass";
+import Shaking from "../UI/Animation/Shaking";
 
 const StyledTransitionGroup = styled(TransitionGroup)`
   .post-enter {
@@ -23,17 +29,41 @@ const StyledTransitionGroup = styled(TransitionGroup)`
     transition: all 100ms ease-in;
   }
 `
+
 interface PostListProps {
     posts: PostProps[];
     remove: (post: PostProps) => void;
+    isPostsLoading:boolean;
 }
-const PostList = ({posts, remove}: PostListProps)=> {
-    if(!posts.length){
-        return (
-        <Flex justifyContent={'center'} padding={'1.5rem'}>
-            <h2>There are no posts here :(</h2>
-        </Flex>
-        )
+const PostList = ({posts, remove,isPostsLoading}: PostListProps)=> {
+    if(isPostsLoading){
+        return <LoadingSpinner />
+    }
+    if(!isPostsLoading && !posts.length){
+        return(
+            <div>
+                <Flex justifyContent={'center'} margin={'1.5rem'}>
+                    <h2>There are no posts here :(
+                        <hr/>
+                    </h2>
+                </Flex>
+
+                <div>
+                    <h3>
+                        <Flex justifyContent={'center'} alignItems={'center'}>
+                            <Shaking /> Try another request
+                        </Flex>
+                        <Flex justifyContent={'center'} alignItems={'center'} padding={'15px'}>
+                            or
+                        </Flex>
+                        <Flex justifyContent={'center'} alignItems={'center'}>
+                            <FontAwesomeIcon icon={faRotateRight} />
+                            Refresh the page
+                        </Flex>
+                    </h3>
+                </div>
+            </div>
+            )
     }
     return (
         <Flex direction={'column'} justifyContent={'center'} padding={'15px'}>
