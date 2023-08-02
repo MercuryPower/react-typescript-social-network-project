@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styled, {createGlobalStyle} from 'styled-components';
 import Flex from './components/Flex';
@@ -11,6 +11,7 @@ import PostList from "./components/PostList";
 import Select from "./UI/Select/Select";
 import PostFilter from "./components/PostFilter";
 import {usePosts, useSortedPosts} from "./hooks/usePosts";
+import axios from "axios";
 
 const AppWrapper = styled.div`
   width: 100%;
@@ -29,18 +30,23 @@ function App() {
     const [searchQuery, setSearchQuery] = useState('');
     const sortedAndSearchedPosts = usePosts(posts, filter.sort, searchQuery);
 
+    useEffect(() => {
+        fetch('https://jsonplaceholder.typicode.com/posts')
+            .then(response => response.json())
+            .then(data => setPosts(data))
+            .catch(error => console.error(error));
+    }, []);
+
     const handleSearchQueryChange = (newSearchQuery: string) => {
         setSearchQuery(newSearchQuery);
     };
-
-
-
     const createPost = (newPost: PostProps)  => {
         setPosts([...posts, newPost])
     }
     const removePost = (post: PostProps) => {
         setPosts(posts.filter((p) => p.id !== post?.id))
     }
+
 
 
     return (
