@@ -9,6 +9,7 @@ const StyledSpan = styled.span<StyledSpanProps>`
 interface StyledSpanProps{
     background?: string;
     children:React.ReactNode;
+
 }
 
 const Span: React.FC<StyledSpanProps> = ({children}) => {

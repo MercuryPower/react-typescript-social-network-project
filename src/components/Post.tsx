@@ -35,7 +35,7 @@ const Post = (props : PostProps) => {
     const [modalShow, setModalShow] = useState(false)
 
     const handleCloseModal = () => {
-        setModalShow(false); // Close the modal when the "Nope" button is clicked
+        setModalShow(false);
     };
     const handleShowModal = () =>{
         setModalShow(true);

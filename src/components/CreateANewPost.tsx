@@ -6,6 +6,8 @@ import Button from "../UI/Button/Button";
 import {faCheck} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import post, {PostProps} from "./Post";
+import {TransitionGroup} from "react-transition-group";
+import Span from "../UI/Span/Span";
 
 export interface CreateANewPostProps {
     create:(newPost: PostProps) => void;

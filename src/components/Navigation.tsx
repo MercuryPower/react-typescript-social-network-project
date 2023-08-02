@@ -6,13 +6,14 @@ import Input from "../UI/Input/Input";
 import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons/faMagnifyingGlass";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
-import Span from "../UI/Span";
+import Span from "../UI/Span/Span";
 
 
 {/*Kyoyu SN*/}
 
 const StyledNavbar = styled(Navbar)`
-    background: ;
+  padding: 1.25em;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
 `
 const CenteredContainer = styled(Container)`
   display: flex;
@@ -29,7 +30,7 @@ const Navigation:React.FC<NavigationProps> = (props) => {
         }
     }
         return (
-            <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
+            <StyledNavbar collapseOnSelect expand="lg" className="bg-body-tertiary">
                 <CenteredContainer>
                     <Navbar.Brand href= "#home">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32px" height="32px">
@@ -44,7 +45,7 @@ const Navigation:React.FC<NavigationProps> = (props) => {
                             <Input onChange={handleInputChange}  placeholder={'Search'}></Input>
                         </div>
                 </CenteredContainer>
-            </Navbar>
+            </StyledNavbar>
         );
 }
 

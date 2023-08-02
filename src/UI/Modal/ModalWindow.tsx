@@ -44,14 +44,8 @@ const StyledModalWindow = styled.div`
   justify-content: center;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.5);
-  ${props => props.show && css`
-    opacity: 1;
-    animation: ${fadeIn} 0.3s ease;
-    `}
-  ${props => !props.show && css`
-    opacity:0;
-    animation:${fadeOut} 0.3s ease;
-    `}
+  opacity: ${props => (props.show ? '1' : '0')};
+  animation: ${props => (props.show ? fadeIn : fadeOut)} 0.3s ease;
   `;
 const ModalContent = styled.div`
   position: relative;
@@ -97,6 +91,7 @@ const ModalWindow:React.FC<ModalProps> = ({show, onConfirm, onClose, children, c
                     <CloseButton onClick={onClose}>
                         <FontAwesomeIcon icon={faTimes} />
                     </CloseButton>
+
                     <Flex justifyContent={'center'} alignItems={'center'} margin={'15px'}>
                         <Button color={'black'} radius={'25px'} margin={'0 10px 0 0'} onClick={onConfirm}>
                             <FontAwesomeIcon icon={faCheck} /><b>{confirmButtonText}</b>
