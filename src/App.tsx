@@ -10,6 +10,7 @@ import CreateANewPost from "./components/CreateANewPost";
 import PostList from "./components/PostList";
 import Select from "./UI/Select/Select";
 import PostFilter from "./components/PostFilter";
+import {usePosts, useSortedPosts} from "./hooks/usePosts";
 
 const AppWrapper = styled.div`
   width: 100%;
@@ -17,36 +18,24 @@ const AppWrapper = styled.div`
   background: white;
 `
 const MenuWrapper = styled.div`
-  max-height: 300px; /* Задайте ширину контента по своему усмотрению */
+  max-height: 300px;
   padding: 20px;
 `
-
+const initialPosts: PostProps[] = [];
 
 function App() {
-    const [posts, setPosts] = useState([
-        {id:1, title:'REACT', body:'Text', remove:() => {}},
-        {id:2, title:'JS', body:'Text2', remove:() => {}},
-        {id:3, title:'TYPESCRIPT', body:'TEXT3', remove:() => {}},
-    ]);
-
+    const [posts, setPosts] = useState(initialPosts);
     const [filter, setFilter] = useState({sort:''});
     const [searchQuery, setSearchQuery] = useState('');
+    const sortedAndSearchedPosts = usePosts(posts, filter.sort, searchQuery);
 
     const handleSearchQueryChange = (newSearchQuery: string) => {
         setSearchQuery(newSearchQuery);
     };
-    const sortedPosts = useMemo(() => {
-        if(filter.sort){
-            return [...posts].sort((a, b) => (a as any)[filter.sort].localeCompare((b as any)[filter.sort]))
-        }
-        return posts;
-    }, [filter.sort, posts])
 
-    const sortedAndSearchedPosts = useMemo(() => {
-        return sortedPosts.filter(post => post.body.toLowerCase().includes(searchQuery))
-    }, [searchQuery, sortedPosts])
 
-    const createPost = (newPost: any)  => { // пофиксить any type
+
+    const createPost = (newPost: PostProps)  => {
         setPosts([...posts, newPost])
     }
     const removePost = (post: PostProps) => {
