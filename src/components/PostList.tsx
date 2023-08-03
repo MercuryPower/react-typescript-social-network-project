@@ -9,6 +9,7 @@ import {faFontAwesome, faRotateRight} from "@fortawesome/free-solid-svg-icons";
 import Span from "../UI/Span/Span";
 import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons/faMagnifyingGlass";
 import Shaking from "../UI/Animation/Shaking";
+import Rotating from "../UI/Animation/Rotating";
 
 const StyledTransitionGroup = styled(TransitionGroup)`
   .post-enter {
@@ -34,10 +35,22 @@ interface PostListProps {
     posts: PostProps[];
     remove: (post: PostProps) => void;
     isPostsLoading:boolean;
+    postError:string;
 }
-const PostList = ({posts, remove,isPostsLoading}: PostListProps)=> {
+const PostList = ({posts, remove,isPostsLoading, postError}: PostListProps)=> {
     if(isPostsLoading){
         return <LoadingSpinner />
+    }
+    if(postError){
+        return(
+            <div>
+                <Flex justifyContent={'center'} margin={'1.5rem'}>
+                    <h2>Oops! Some error: ${postError}
+                        <hr/>
+                    </h2>
+                </Flex>
+            </div>
+        )
     }
     if(!isPostsLoading && !posts.length){
         return(
@@ -49,7 +62,7 @@ const PostList = ({posts, remove,isPostsLoading}: PostListProps)=> {
                 </Flex>
 
                 <div>
-                    <h3>
+                    <h4>
                         <Flex justifyContent={'center'} alignItems={'center'}>
                             <Shaking /> Try another request
                         </Flex>
@@ -57,14 +70,13 @@ const PostList = ({posts, remove,isPostsLoading}: PostListProps)=> {
                             or
                         </Flex>
                         <Flex justifyContent={'center'} alignItems={'center'}>
-                            <FontAwesomeIcon icon={faRotateRight} />
-                            Refresh the page
+                            <Rotating />{' '}Refresh the page
                         </Flex>
-                    </h3>
+                    </h4>
                 </div>
             </div>
             )
-    }
+        }
     return (
         <Flex direction={'column'} justifyContent={'center'} padding={'15px'}>
             <StyledTransitionGroup>
