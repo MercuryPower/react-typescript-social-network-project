@@ -25,6 +25,7 @@ const StyledButton = styled.button<StyledButtonProps>`
   cursor: pointer;
   box-shadow: 3px 3px  rgba(0, 0, 255, .2);
   align-self: ${props => props.alignSelf || 'stretch'};
+  border-radius: 25px;
   
   ${props => css`
     margin:${props.margin};
