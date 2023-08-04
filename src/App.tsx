@@ -37,21 +37,21 @@ function App() {
     const [filter, setFilter] = useState({sort:''});
     const [searchQuery, setSearchQuery] = useState('');
     const [totalPages, setTotalPages] = useState(0);
-    const [limit, setLimit] = useState(10);
+    const [limit, setLimit] = useState(20);
     const [page, setPage] = useState(1);
     const sortedAndSearchedPosts = usePosts(posts, filter.sort, searchQuery);
     const pagination = usePagination(totalPages);
 
 
-    const [fetchPostsData, isPostsLoading, postError] = useFetching(async () =>{
+    const [fetchPostsData, isPostsLoading, postError] = useFetching(async (limit, page) =>{
         const response = await PostService.getAll(limit, page);
         setPosts(response.data);
         const totalCount = response.headers['x-total-count']
         setTotalPages(getPageCount(totalCount, limit));
     })
     useEffect(() => {
-        fetchPostsData();
-    }, [page]);
+        fetchPostsData(limit,page);
+    }, []);
 
 
     const handleSearchQueryChange = (newSearchQuery: string) => {
@@ -65,6 +65,7 @@ function App() {
     }
     const changePage = (page:number) => {
         setPage(page);
+        fetchPostsData(limit,page);
     }
 
 
@@ -89,7 +90,6 @@ function App() {
                       <div>
                         <Pagination totalPages={totalPages} page={page} changePage={changePage} />
                       </div>
-
                   </div>
               </Flex>
           </div>
