@@ -1,25 +1,88 @@
-import React, {Component} from 'react';
+import React, {useEffect, useState} from 'react';
 import Navigation from "../components/Navigation";
+import Flex from "../components/Flex";
 import Menu from "../components/Menu";
+import CreateANewPost from "../components/CreateANewPost";
+import PostFilter from "../components/PostFilter";
+import PostList from "../components/PostList";
+import Pagination from "../components/Pagination";
+import {usePosts} from "../hooks/usePosts";
+import {usePagination} from "../hooks/usePagination";
+import {useFetching} from "../hooks/useFetching";
+import PostService from "../API/PostService";
+import {getPageCount} from "../components/utils/pages";
+import {PostProps} from "../components/Post";
 import styled from "styled-components";
 
 
-
-
-const AppWrapper = styled.div`
-  width: 100%;
-  min-height: 100vh;
-  background: white;
+const MenuWrapper = styled.div`
+  display: flex;
+  max-height: 300px;
+  padding: 20px;
 `
-class Home extends Component {
-    render() {
-        return (
-            <AppWrapper>
-                <Navigation/>
-                <Menu/>
-            </AppWrapper>
-        );
+const initialPosts: PostProps[] = [];
+const Home = () => {
+    const [posts, setPosts] = useState(initialPosts);
+    const [filter, setFilter] = useState({sort:''});
+    const [searchQuery, setSearchQuery] = useState('');
+    const [totalPages, setTotalPages] = useState(0);
+    const [limit, setLimit] = useState(20);
+    const [page, setPage] = useState(1);
+    const sortedAndSearchedPosts = usePosts(posts, filter.sort, searchQuery);
+
+
+    const [fetchPostsData, isPostsLoading, postError] = useFetching(async (limit, page) =>{
+        const response = await PostService.getAll(limit, page);
+        setPosts(response.data);
+        const totalCount = response.headers['x-total-count']
+        setTotalPages(getPageCount(totalCount, limit));
+    })
+    useEffect(() => {
+        fetchPostsData(limit,page);
+    }, []);
+
+
+    const handleSearchQueryChange = (newSearchQuery: string) => {
+        setSearchQuery(newSearchQuery);
+    };
+    const createPost = (newPost: PostProps)  => {
+        setPosts([...posts, newPost])
     }
-}
+    const removePost = (post: PostProps) => {
+        setPosts(posts.filter((p) => p.id !== post?.id))
+    }
+    const changePage = (page:number) => {
+        setPage(page);
+        fetchPostsData(limit,page);
+    }
+
+
+
+    return (
+        <div>
+            <div>
+                <Navigation onSearchQueryChange={handleSearchQueryChange}/>
+            </div>
+            <div>
+                <Flex justifyContent={'center'}>
+                    <MenuWrapper>
+                        <Menu/>
+                    </MenuWrapper>
+                    <div>
+                        <br/>
+                        <div>
+                            <CreateANewPost create={createPost} />
+                            <PostFilter filter={filter} setFilter={setFilter} />
+                            <PostList remove={removePost} posts={sortedAndSearchedPosts} isPostsLoading={isPostsLoading} postError={postError}/>
+                        </div>
+                        <div>
+                            <Pagination totalPages={totalPages} page={page} changePage={changePage} />
+                        </div>
+                    </div>
+                </Flex>
+            </div>
+        </div>
+    );
+};
 
 export default Home;

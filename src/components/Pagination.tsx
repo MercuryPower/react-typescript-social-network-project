@@ -14,7 +14,7 @@ const Pagination = ({totalPages, page, changePage }:PaginationProps ) => {
         <Flex justifyContent={'center'} alignItems={'center'}>
             {pagesArray.map((p: number) => (
                 <div className={'PagesNumeric'}>
-                    <Button onClick={() => changePage(p)} color={page === p ? '#FFFFFF' : '#000000'} background={page === p ? 'black' : 'white'} key={p}>
+                    <Button  onClick={() => changePage(p)} color={page === p ? '#FFFFFF' : '#000000'} background={page === p ? 'black' : 'white'} key={p}>
                         {p}
                     </Button>
                 </div>
