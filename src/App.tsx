@@ -15,6 +15,10 @@ import axios from "axios";
 import LoadingSpinner from "./UI/Loading Spinner/LoadingSpinner";
 import {useFetching} from "./hooks/useFetching";
 import PostService from "./API/PostService";
+import {getPageCount} from "./components/utils/pages";
+import {usePagination} from "./hooks/usePagination";
+import Button from "./UI/Button/Button";
+import Pagination from "./components/Pagination";
 
 const AppWrapper = styled.div`
   width: 100%;
@@ -22,6 +26,7 @@ const AppWrapper = styled.div`
   background: white;
 `
 const MenuWrapper = styled.div`
+  display: flex;
   max-height: 300px;
   padding: 20px;
 `
@@ -31,14 +36,22 @@ function App() {
     const [posts, setPosts] = useState(initialPosts);
     const [filter, setFilter] = useState({sort:''});
     const [searchQuery, setSearchQuery] = useState('');
+    const [totalPages, setTotalPages] = useState(0);
+    const [limit, setLimit] = useState(10);
+    const [page, setPage] = useState(1);
     const sortedAndSearchedPosts = usePosts(posts, filter.sort, searchQuery);
+    const pagination = usePagination(totalPages);
+
+
     const [fetchPostsData, isPostsLoading, postError] = useFetching(async () =>{
-        const posts = await PostService.getAll();
-        setPosts(posts);
+        const response = await PostService.getAll(limit, page);
+        setPosts(response.data);
+        const totalCount = response.headers['x-total-count']
+        setTotalPages(getPageCount(totalCount, limit));
     })
     useEffect(() => {
         fetchPostsData();
-    }, []);
+    }, [page]);
 
 
     const handleSearchQueryChange = (newSearchQuery: string) => {
@@ -49,6 +62,9 @@ function App() {
     }
     const removePost = (post: PostProps) => {
         setPosts(posts.filter((p) => p.id !== post?.id))
+    }
+    const changePage = (page:number) => {
+        setPage(page);
     }
 
 
@@ -70,6 +86,10 @@ function App() {
                           <PostFilter filter={filter} setFilter={setFilter} />
                           <PostList remove={removePost} posts={sortedAndSearchedPosts} isPostsLoading={isPostsLoading} postError={postError}/>
                       </div>
+                      <div>
+                        <Pagination totalPages={totalPages} page={page} changePage={changePage} />
+                      </div>
+
                   </div>
               </Flex>
           </div>

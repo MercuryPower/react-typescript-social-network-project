@@ -48,7 +48,7 @@ const Post = (props : PostProps) => {
             <StyledPost>
                 <Flex justifyContent={'space-between'} alignItems={'center'}>
                     <div>
-                        <h4><strong>{props.number}. {props.title}</strong></h4>
+                        <h4><strong>{props.id}. {props.title}</strong></h4>
                     </div>
                     <div>
                         <Button  onClick={handleShowModal} radius={'25px'}><FontAwesomeIcon icon={faTrashCan} /></Button>
