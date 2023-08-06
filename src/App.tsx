@@ -1,26 +1,20 @@
-import React from 'react';
+import React, {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import styled from 'styled-components';
 import "./App.scss";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
-import Home from "./pages/Home";
-import UserPage from "./pages/UserPage";
-
-const AppWrapper = styled.div`
-  width: 100%;
-  min-height: 100vh;
-  background: white;
-`
-
+import {BrowserRouter} from "react-router-dom";
+import Navigation from "./components/Navigation";
+import AppRouter from "./components/AppRouter";
 
 function App() {
+    const [searchQuery, setSearchQuery] = useState('');
+    const handleSearchQueryChange = (newSearchQuery: string) => {
+        setSearchQuery(newSearchQuery);
+    };
+
     return (
         <BrowserRouter>
-
-            <Routes>
-                <Route path={'/me'} element={<UserPage />} />
-                <Route path={'/home'} element={<Home />} />
-            </Routes>
+            <Navigation onSearchQueryChange={handleSearchQueryChange}/>
+            <AppRouter searchQuery={searchQuery}  />
         </BrowserRouter>
   );
 }

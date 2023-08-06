@@ -10,6 +10,8 @@ import Span from "../UI/Span/Span";
 import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons/faMagnifyingGlass";
 import Shaking from "../UI/Animation/Shaking";
 import Rotating from "../UI/Animation/Rotating";
+import ErrorMessage from "./ErrorMessage";
+import NoPosts from "./NoPosts";
 
 const StyledTransitionGroup = styled(TransitionGroup)`
   .post-enter {
@@ -37,51 +39,20 @@ interface PostListProps {
     isPostsLoading:boolean;
     postError:string;
 }
+
+
 const PostList = ({posts, remove,isPostsLoading, postError}: PostListProps)=> {
     if(isPostsLoading){
         return <LoadingSpinner />
     }
     if(postError){
         return(
-            <div>
-                <Flex justifyContent={'center'} margin={'1.5rem'}>
-                    <h2>Oops! Error: ${postError}
-                        <hr/>
-                    </h2>
-                </Flex>
-                <div>
-                    <h4>
-                        <Flex justifyContent={'center'} alignItems={'center'}>
-                            <Rotating />Try to Refresh the page
-                        </Flex>
-                    </h4>
-                </div>
-            </div>
+            <ErrorMessage postError={postError} />
         )
     }
     if(!isPostsLoading && !posts.length){
         return(
-            <div>
-                <Flex justifyContent={'center'} margin={'1.5rem'}>
-                    <h2>There are no posts here :(
-                        <hr/>
-                    </h2>
-                </Flex>
-
-                <div>
-                    <h4>
-                        <Flex justifyContent={'center'} alignItems={'center'}>
-                            <Shaking /> Try another request
-                        </Flex>
-                        <Flex justifyContent={'center'} alignItems={'center'} padding={'15px'}>
-                            or
-                        </Flex>
-                        <Flex justifyContent={'center'} alignItems={'center'}>
-                            <Rotating />Refresh the page
-                        </Flex>
-                    </h4>
-                </div>
-            </div>
+           <NoPosts />
             )
         }
     return (

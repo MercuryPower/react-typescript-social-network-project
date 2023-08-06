@@ -7,7 +7,6 @@ import PostFilter from "../components/PostFilter";
 import PostList from "../components/PostList";
 import Pagination from "../components/Pagination";
 import {usePosts} from "../hooks/usePosts";
-import {usePagination} from "../hooks/usePagination";
 import {useFetching} from "../hooks/useFetching";
 import PostService from "../API/PostService";
 import {getPageCount} from "../components/utils/pages";
@@ -16,15 +15,29 @@ import styled from "styled-components";
 
 
 const MenuWrapper = styled.div`
+  flex:1;
+  justify-content: flex-end;
   display: flex;
   max-height: 300px;
   padding: 20px;
 `
+const PostsWrapper = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+`;
+
+const EmptySpace = styled.div`
+  flex: 1;
+`;
+
 const initialPosts: PostProps[] = [];
-const Home = () => {
+const Home = ({ searchQuery }: { searchQuery: string }) => {
     const [posts, setPosts] = useState(initialPosts);
     const [filter, setFilter] = useState({sort:''});
-    const [searchQuery, setSearchQuery] = useState('');
     const [totalPages, setTotalPages] = useState(0);
     const [limit, setLimit] = useState(20);
     const [page, setPage] = useState(1);
@@ -42,9 +55,6 @@ const Home = () => {
     }, []);
 
 
-    const handleSearchQueryChange = (newSearchQuery: string) => {
-        setSearchQuery(newSearchQuery);
-    };
     const createPost = (newPost: PostProps)  => {
         setPosts([...posts, newPost])
     }
@@ -60,27 +70,23 @@ const Home = () => {
 
     return (
         <div>
-            <div>
-                <Navigation onSearchQueryChange={handleSearchQueryChange}/>
-            </div>
-            <div>
-                <Flex justifyContent={'center'}>
-                    <MenuWrapper>
-                        <Menu/>
-                    </MenuWrapper>
+            <Flex justifyContent={'center'}>
+                <MenuWrapper>
+                    <Menu/>
+                </MenuWrapper>
+                <PostsWrapper>
+                    <br/>
                     <div>
-                        <br/>
-                        <div>
-                            <CreateANewPost create={createPost} />
-                            <PostFilter filter={filter} setFilter={setFilter} />
-                            <PostList remove={removePost} posts={sortedAndSearchedPosts} isPostsLoading={isPostsLoading} postError={postError}/>
-                        </div>
-                        <div>
-                            <Pagination totalPages={totalPages} page={page} changePage={changePage} />
-                        </div>
+                        <CreateANewPost create={createPost} />
+                        <PostFilter filter={filter} setFilter={setFilter} />
+                        <PostList remove={removePost} posts={sortedAndSearchedPosts} isPostsLoading={isPostsLoading} postError={postError}/>
                     </div>
-                </Flex>
-            </div>
+                    <div>
+                        <Pagination totalPages={totalPages} page={page} changePage={changePage} />
+                    </div>
+                </PostsWrapper>
+                <EmptySpace />
+            </Flex>
         </div>
     );
 };

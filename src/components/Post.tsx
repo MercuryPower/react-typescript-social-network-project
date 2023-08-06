@@ -6,6 +6,7 @@ import styled from "styled-components";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrashCan} from "@fortawesome/free-solid-svg-icons";
 import ModalWindow from "../UI/Modal/ModalWindow";
+import {faEye} from "@fortawesome/free-regular-svg-icons/faEye";
 
 const StyledPost = styled.div`
     padding:1rem;
@@ -13,7 +14,6 @@ const StyledPost = styled.div`
     border: 1px solid black;
     border-radius: 25px;
     height: 30em;
-    max-width: 30rem;
     justify-content: center;
     flex-wrap: nowrap;
     overflow-wrap: break-word;
@@ -50,9 +50,14 @@ const Post = (props : PostProps) => {
                     <div>
                         <h4><strong>{props.id}. {props.title}</strong></h4>
                     </div>
-                    <div>
-                        <Button  onClick={handleShowModal} radius={'25px'}><FontAwesomeIcon icon={faTrashCan} /></Button>
-                    </div>
+                <Flex justifyContent={'flex-end'} direction={'column'}>
+                    <Flex direction={'column'} alignItems={'flex-end'}>
+                        <Button  color={'white'}  onClick={handleShowModal} radius={'25px'} margin={'0 0 7px 0'}><FontAwesomeIcon icon={faEye} /><b> Show</b></Button>
+                    </Flex>
+                    <Flex direction={'column'} alignItems={'flex-end'}>
+                        <Button color={'white'}  onClick={handleShowModal} radius={'25px'}><FontAwesomeIcon icon={faTrashCan} /> Delete</Button>
+                    </Flex>
+                </Flex>
                 </Flex>
                 <StyledPostText>{props.body}</StyledPostText>
             </StyledPost>

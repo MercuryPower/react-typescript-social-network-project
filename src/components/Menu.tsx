@@ -6,9 +6,9 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faUser, faNewspaper, faEnvelope, faUserGroup} from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import Li from "../UI/Li/Li";
+import {Link, redirect} from "react-router-dom";
 
-const StyledMenu = styled(Flex)`
-  display: flex;
+const StyledMenu = styled.div`
   ol{
       padding: 0;
     }
@@ -24,21 +24,23 @@ const StyledMenu = styled(Flex)`
 const Menu = () =>{
 
         const menuItems = [
-            { icon: faUser, text:'My page'},
-            { icon: faNewspaper, text:'News'},
-            { icon: faEnvelope, text:'Messages'},
-            { icon: faUserGroup, text:'Friends'},
+            { icon: faUser, text:'My page', link:'/me'},
+            { icon: faNewspaper, text:'News', link:'/news'},
+            { icon: faEnvelope, text:'Messages',link:'/messages'},
+            { icon: faUserGroup, text:'Friends',link:'/friends'},
     ];
 
         return (
-            <StyledMenu alignItems={'center'}>
+            <StyledMenu>
                 <nav>
                     <ol>
                         {menuItems.map((item, index) => (
                             <Li key={index}>
-                                <Button color={'black'}>
-                                    <FontAwesomeIcon icon={item.icon} /> {item.text}
-                                </Button>
+                                <Link to={item.link}>
+                                    <Button color={'black'}>
+                                        <FontAwesomeIcon icon={item.icon} /> {item.text}
+                                    </Button>
+                                </Link>
                             </Li>
                         ))}
                     </ol>
