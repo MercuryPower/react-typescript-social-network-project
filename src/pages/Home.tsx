@@ -21,10 +21,9 @@ const MenuWrapper = styled.div`
   padding: 20px;
 `
 const initialPosts: PostProps[] = [];
-const Home = () => {
+const Home = ({ searchQuery }: { searchQuery: string }) => {
     const [posts, setPosts] = useState(initialPosts);
     const [filter, setFilter] = useState({sort:''});
-    const [searchQuery, setSearchQuery] = useState('');
     const [totalPages, setTotalPages] = useState(0);
     const [limit, setLimit] = useState(20);
     const [page, setPage] = useState(1);
@@ -42,9 +41,6 @@ const Home = () => {
     }, []);
 
 
-    const handleSearchQueryChange = (newSearchQuery: string) => {
-        setSearchQuery(newSearchQuery);
-    };
     const createPost = (newPost: PostProps)  => {
         setPosts([...posts, newPost])
     }
@@ -60,27 +56,22 @@ const Home = () => {
 
     return (
         <div>
-            <div>
-                <Navigation onSearchQueryChange={handleSearchQueryChange}/>
-            </div>
-            <div>
-                <Flex justifyContent={'center'}>
-                    <MenuWrapper>
-                        <Menu/>
-                    </MenuWrapper>
+            <Flex justifyContent={'center'}>
+                <MenuWrapper>
+                    <Menu/>
+                </MenuWrapper>
+                <div>
+                    <br/>
                     <div>
-                        <br/>
-                        <div>
-                            <CreateANewPost create={createPost} />
-                            <PostFilter filter={filter} setFilter={setFilter} />
-                            <PostList remove={removePost} posts={sortedAndSearchedPosts} isPostsLoading={isPostsLoading} postError={postError}/>
-                        </div>
-                        <div>
-                            <Pagination totalPages={totalPages} page={page} changePage={changePage} />
-                        </div>
+                        <CreateANewPost create={createPost} />
+                        <PostFilter filter={filter} setFilter={setFilter} />
+                        <PostList remove={removePost} posts={sortedAndSearchedPosts} isPostsLoading={isPostsLoading} postError={postError}/>
                     </div>
-                </Flex>
-            </div>
+                    <div>
+                        <Pagination totalPages={totalPages} page={page} changePage={changePage} />
+                    </div>
+                </div>
+            </Flex>
         </div>
     );
 };

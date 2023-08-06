@@ -4,6 +4,7 @@ import styled, {css, StyledProps} from "styled-components";
 
 interface StyledButtonProps{
     small?:boolean;
+    big?:boolean;
     alignSelf?:string;
     color?:string;
     background?:string;
@@ -35,9 +36,12 @@ const StyledButton = styled.button<StyledButtonProps>`
   ${props => props.small && css`
     font-size:${props.font || '12px'};
   `}
+  ${props => props.big && css`
+    font-size:${props.font || '24px'};
+  `}
   
   ${props => css`
-    color:${props.color || 'white'};
+    color:${props.color || 'black'};
     background: ${props.background || 'transparent'};
     border-radius: ${props.radius};
   `}
