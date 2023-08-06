@@ -7,7 +7,6 @@ import PostFilter from "../components/PostFilter";
 import PostList from "../components/PostList";
 import Pagination from "../components/Pagination";
 import {usePosts} from "../hooks/usePosts";
-import {usePagination} from "../hooks/usePagination";
 import {useFetching} from "../hooks/useFetching";
 import PostService from "../API/PostService";
 import {getPageCount} from "../components/utils/pages";
@@ -16,10 +15,25 @@ import styled from "styled-components";
 
 
 const MenuWrapper = styled.div`
+  flex:1;
+  justify-content: flex-end;
   display: flex;
   max-height: 300px;
   padding: 20px;
 `
+const PostsWrapper = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+`;
+
+const EmptySpace = styled.div`
+  flex: 1;
+`;
+
 const initialPosts: PostProps[] = [];
 const Home = ({ searchQuery }: { searchQuery: string }) => {
     const [posts, setPosts] = useState(initialPosts);
@@ -60,7 +74,7 @@ const Home = ({ searchQuery }: { searchQuery: string }) => {
                 <MenuWrapper>
                     <Menu/>
                 </MenuWrapper>
-                <div>
+                <PostsWrapper>
                     <br/>
                     <div>
                         <CreateANewPost create={createPost} />
@@ -70,7 +84,8 @@ const Home = ({ searchQuery }: { searchQuery: string }) => {
                     <div>
                         <Pagination totalPages={totalPages} page={page} changePage={changePage} />
                     </div>
-                </div>
+                </PostsWrapper>
+                <EmptySpace />
             </Flex>
         </div>
     );

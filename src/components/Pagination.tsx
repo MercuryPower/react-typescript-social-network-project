@@ -11,7 +11,7 @@ type PaginationProps = {
 const Pagination = ({totalPages, page, changePage }:PaginationProps ) => {
     let pagesArray = usePagination(totalPages);
     return (
-        <Flex justifyContent={'center'} alignItems={'center'}>
+        <Flex justifyContent={'center'} alignItems={'center'} margin={'5rem'}>
             {pagesArray.map((p: number) => (
                 <div className={'PagesNumeric'}>
                     <Button  onClick={() => changePage(p)} color={page === p ? '#FFFFFF' : '#000000'} background={page === p ? 'black' : 'white'} key={p}>
