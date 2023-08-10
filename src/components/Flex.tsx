@@ -8,6 +8,7 @@ interface StyledFlexProps{
     margin?:string;
     padding?:string;
     gap?:string;
+    wrap?:string;
 }
 interface FlexProps {
     [key: string]: any;
@@ -15,6 +16,7 @@ interface FlexProps {
 const StyledFlex = styled.div<StyledFlexProps>`
   display: flex;
   flex-direction: ${props => props.direction || 'row'};
+  flex-wrap: ${props => props.wrap || 'nowrap'};
   align-items: ${props => props.alignItems || 'stretch'};
   justify-content: ${props => props.justifyContent || 'stretch'};
   margin: ${({margin}) => margin || '0'};
