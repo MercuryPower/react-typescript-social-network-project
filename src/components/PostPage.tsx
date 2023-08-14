@@ -57,8 +57,8 @@ const PostPage = () => {
                 :
                     <Flex margin={'5rem'}>
                         {comments.map((comm : CommentsProps) =>
-                            <div >
-                                <h5><b>{comm.email}</b>:</h5>
+                            <div className={'comments_block'}>
+                                <h5 className={'comments_block_email'}>{comm.email}:</h5>
                                 <div>
                                     {comm.body}
                                 </div>
