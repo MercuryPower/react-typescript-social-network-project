@@ -35,4 +35,17 @@
   background: #007FFF;
   color:white;
 }
+.login_block {
+  text-align: center;
+  margin:5rem
+}
+.login_block_form form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.login_block_form form Input{
+  margin-bottom: 15px;
+}
 

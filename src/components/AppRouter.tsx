@@ -1,30 +1,44 @@
 import React, {useState} from 'react';
-import {Navigate, Route, Routes} from "react-router-dom";
+import {Navigate, Route, RouteProps, Routes} from "react-router-dom";
 import UserPage from "../pages/UserPage";
 import Home from "../pages/Home";
 import NotFound from "../pages/NotFound";
 import PostPage from "./PostPage";
+import {publicRoutes, privateRoutes} from "./router";
 
 interface AppRouterProps {
     searchQuery:string;
 }
+
 const AppRouter= ({searchQuery}:AppRouterProps) => {
+    const isAuth = false;
     return (
+        isAuth ?
         <Routes>
-            <Route path="/" element={<Navigate to="/home" />} />
-            <Route
-                path={'/me'}
-                element={<UserPage />} />
-            <Route
-                path={'/home'}
-                element={<Home searchQuery={searchQuery} />} />
-            <Route
-                path={'/home/:id'}
-                element={<PostPage/>} />
-            <Route
-                path="*"
-                element={<NotFound />}
-            />
+            {privateRoutes.map(route => (
+                <Route
+                    key={route.path}
+                    path={route.path}
+                    element={
+                        route.path === '/home' ? (
+                            <route.element searchQuery={searchQuery} />
+                        ) : (
+                            <route.element />
+                        )
+                    }
+                />
+            ))}
+        </Routes>
+            :
+        <Routes>
+            {publicRoutes.map(route => (
+                <Route
+                    key={route.path}
+                    path={route.path}
+                    element={<route.element />}
+                />
+            ))}
+            <Route path="/" element={<Navigate to="/login" />} />
         </Routes>
     );
 };
