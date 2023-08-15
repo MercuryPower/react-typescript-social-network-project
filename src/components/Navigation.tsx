@@ -56,7 +56,7 @@ const Navigation:React.FC<NavigationProps> = (props) => {
                     </Navbar.Collapse>
                         <div>
                             <FontAwesomeIcon icon={faMagnifyingGlass} />
-                            <Input onChange={handleInputChange}  placeholder={'Search'} value={searchQuery}></Input>
+                            <Input type={'text'} onChange={handleInputChange}  placeholder={'Search'} value={searchQuery}></Input>
                         </div>
                 </CenteredContainer>
             </StyledNavbar>

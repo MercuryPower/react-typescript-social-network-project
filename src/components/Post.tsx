@@ -7,8 +7,9 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrashCan} from "@fortawesome/free-solid-svg-icons";
 import ModalWindow from "../UI/Modal/ModalWindow";
 import {faEye} from "@fortawesome/free-regular-svg-icons/faEye";
+import {useNavigate} from "react-router-dom";
 
-const StyledPost = styled.div`
+export const StyledPost = styled.div`
     padding:1rem;
     margin:1rem;
     border: 1px solid black;
@@ -32,6 +33,9 @@ export interface PostProps {
 }
 
 const Post = (props : PostProps) => {
+
+    const navigate = useNavigate();
+
     const [modalShow, setModalShow] = useState(false)
 
     const handleCloseModal = () => {
@@ -52,7 +56,7 @@ const Post = (props : PostProps) => {
                     </div>
                 <Flex justifyContent={'flex-end'} direction={'column'}>
                     <Flex direction={'column'} alignItems={'flex-end'}>
-                        <Button  color={'white'}  onClick={handleShowModal} radius={'25px'} margin={'0 0 7px 0'}><FontAwesomeIcon icon={faEye} /><b> Show</b></Button>
+                        <Button color={'white'} onClick={() => {navigate(`/home/${props.id}`)}} radius={'25px'} margin={'0 0 7px 0'}><FontAwesomeIcon icon={faEye} /><b> Show</b></Button>
                     </Flex>
                     <Flex direction={'column'} alignItems={'flex-end'}>
                         <Button color={'white'}  onClick={handleShowModal} radius={'25px'}><FontAwesomeIcon icon={faTrashCan} /> Delete</Button>
