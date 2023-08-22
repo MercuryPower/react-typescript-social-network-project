@@ -102,10 +102,7 @@ const Home = ({ searchQuery }: { searchQuery: string }) => {
                         <CreateANewPost create={createPost} />
                         <PostFilter filter={filter} setFilter={setFilter} />
                         <PostList remove={removePost} posts={sortedAndSearchedPosts} isPostsLoading={isPostsLoading} postError={postError}/>
-                        <div ref={lastElement} style={{height:20, background:'red'}}></div>
-                    </div>
-                    <div>
-                        <Pagination totalPages={totalPages} page={page} changePage={changePage} />
+                        <div ref={lastElement}></div>
                     </div>
                 </PostsWrapper>
                 <EmptySpace />

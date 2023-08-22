@@ -42,21 +42,23 @@ interface PostListProps {
 
 
 const PostList = ({posts, remove,isPostsLoading, postError}: PostListProps)=> {
-    if(isPostsLoading){
-        return <LoadingSpinner />
-    }
+    // if(isPostsLoading){
+    //     return (
+    //             <LoadingSpinner /> // bug when posts loading with observation api I will remove that and it's works, need to fix
+    //         )
+    // }
     if(postError){
         return(
             <ErrorMessage postError={postError} />
         )
     }
-    if(!isPostsLoading && !posts.length){
+    if(!isPostsLoading && posts.length < 0){
         return(
            <NoPosts />
             )
         }
     return (
-        <React.Fragment>
+        <div>
             <StyledTransitionGroup>
             {posts.map((post: PostProps, index: number) =>
                 <CSSTransition
@@ -68,7 +70,7 @@ const PostList = ({posts, remove,isPostsLoading, postError}: PostListProps)=> {
                 </CSSTransition>
             )}
             </StyledTransitionGroup>
-        </React.Fragment>
+        </div>
 
     );
 };
