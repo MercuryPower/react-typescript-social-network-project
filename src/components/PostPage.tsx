@@ -37,27 +37,28 @@ const PostPage = () => {
     }, [])
     return (
         <div>
-                <Flex justifyContent={'center'} margin={'2rem'}>
-                    <h1>You are in Post Page!</h1>
-                </Flex>
-                {post !== null ? (
-                    <Flex justifyContent={'center'} direction={'column'} alignItems={'center'}>
-                        {post.id} {post.title}
-                        <div>
+            {post !== null ? (
+                    <>
+                        <Flex justifyContent={'center'} margin={'2rem'}>
+                            <h1>{post.id} {post.title}</h1>
+                        </Flex>
+                        <Flex justifyContent={'center'} direction={'column'} alignItems={'center'}>
                             {post.body}
-                        </div>
-                    </Flex>)
+                        </Flex>
+                    </>
+                )
                 :
-                    <LoadingSpinner />}
-            <Flex justifyContent={'center'} margin={'2.5rem'}>
+                    <LoadingSpinner />
+            }
+            <Flex justifyContent={'center'} margin={'5rem 0 0 0'}>
                 <h2>Comments:</h2>
             </Flex>
                 {isComLoading ?
                     <LoadingSpinner />
                 :
-                    <Flex margin={'5rem'}>
+                    <Flex>
                         {comments.map((comm : CommentsProps) =>
-                            <div className={'comments_block'}>
+                            <div key={comm.id} className={'comments_block'}>
                                 <h5 className={'comments_block_email'}>{comm.email}:</h5>
                                 <div>
                                     {comm.body}

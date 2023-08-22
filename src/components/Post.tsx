@@ -14,10 +14,9 @@ export const StyledPost = styled.div`
     margin:1rem;
     border: 1px solid black;
     border-radius: 25px;
-    height: 30em;
+    height: 500px;
     justify-content: center;
-    flex-wrap: nowrap;
-    overflow-wrap: break-word;
+    word-break: break-all;
     background: linear-gradient(90deg, rgba(89, 83, 255, 0.8) 0%, rgba(135, 135, 212, 1) 50%, rgba(126, 199, 214, 1) 100%);
     color:white;
 `
@@ -54,14 +53,14 @@ const Post = (props : PostProps) => {
                     <div>
                         <h4><strong>{props.id}. {props.title}</strong></h4>
                     </div>
-                <Flex justifyContent={'flex-end'} direction={'column'}>
-                    <Flex direction={'column'} alignItems={'flex-end'}>
-                        <Button color={'white'} onClick={() => {navigate(`/home/${props.id}`)}} radius={'25px'} margin={'0 0 7px 0'}><FontAwesomeIcon icon={faEye} /><b> Show</b></Button>
+                    <Flex justifyContent={'flex-end'} direction={'column'}>
+                        <Flex direction={'column'} alignItems={'flex-end'}>
+                            <Button color={'white'} onClick={() => {navigate(`/home/${props.id}`)}} radius={'25px'} margin={'0 0 7px 0'}><FontAwesomeIcon icon={faEye} /><b> Show</b></Button>
+                        </Flex>
+                        <Flex direction={'column'} alignItems={'flex-end'}>
+                            <Button color={'white'}  onClick={handleShowModal} radius={'25px'}><FontAwesomeIcon icon={faTrashCan} /> Delete</Button>
+                        </Flex>
                     </Flex>
-                    <Flex direction={'column'} alignItems={'flex-end'}>
-                        <Button color={'white'}  onClick={handleShowModal} radius={'25px'}><FontAwesomeIcon icon={faTrashCan} /> Delete</Button>
-                    </Flex>
-                </Flex>
                 </Flex>
                 <StyledPostText>{props.body}</StyledPostText>
             </StyledPost>

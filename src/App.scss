@@ -18,8 +18,7 @@
   color:white;
 }
 .PagesNumeric{
-  margin-right:0.25rem;
-  margin-bottom:1rem;
+  margin:0.25rem;
 }
 .comments_block{
   width:400px;
@@ -47,5 +46,16 @@
 }
 .login_block_form form Input{
   margin-bottom: 15px;
+}
+.logOut_block{
+  font-weight: bold;
+  margin-left:15px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.logOut_button{
+  cursor: pointer;
+  margin-left:10px;
 }
 

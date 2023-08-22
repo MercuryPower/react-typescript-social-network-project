@@ -16,7 +16,7 @@ interface FlexProps {
 const StyledFlex = styled.div<StyledFlexProps>`
   display: flex;
   flex-direction: ${props => props.direction || 'row'};
-  flex-wrap: ${props => props.wrap || 'nowrap'};
+  flex-wrap: ${props => props.wrap || 'wrap'};
   align-items: ${props => props.alignItems || 'stretch'};
   justify-content: ${props => props.justifyContent || 'stretch'};
   margin: ${({margin}) => margin || '0'};

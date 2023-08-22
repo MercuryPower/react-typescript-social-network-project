@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
@@ -8,6 +8,8 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
 import Span from "../UI/Span/Span";
 import {Link} from "react-router-dom";
+import {faRightToBracket, faUser} from "@fortawesome/free-solid-svg-icons";
+import {AuthContext} from "../context";
 
 
 {/*Kyoyu SN*/}
@@ -26,6 +28,11 @@ interface NavigationProps {
 }
 const Navigation:React.FC<NavigationProps> = (props) => {
     const [searchQuery, setSearchQuery] = useState('');
+    const {isAuth, setIsAuth} = useContext(AuthContext);
+    const logOut = () => {
+        setIsAuth(false);
+        localStorage.removeItem('auth');
+    }
     const handleInputChange =(e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchQuery(e.target.value);
         if(props.onSearchQueryChange){
@@ -52,12 +59,13 @@ const Navigation:React.FC<NavigationProps> = (props) => {
                             <Nav.Link as={Link} to={'/about'}>
                                 About
                             </Nav.Link>
+                            <Nav.Link onClick={logOut}>
+                                <FontAwesomeIcon  icon={faRightToBracket} />
+                            </Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
-                        <div>
-                            <FontAwesomeIcon icon={faMagnifyingGlass} />
-                            <Input type={'text'} onChange={handleInputChange}  placeholder={'Search'} value={searchQuery}></Input>
-                        </div>
+                        <FontAwesomeIcon icon={faMagnifyingGlass} />
+                        <Input type={'text'} onChange={handleInputChange}  placeholder={'Search'} value={searchQuery}></Input>
                 </CenteredContainer>
             </StyledNavbar>
         );

@@ -56,7 +56,7 @@ const PostList = ({posts, remove,isPostsLoading, postError}: PostListProps)=> {
             )
         }
     return (
-        <Flex direction={'column'} justifyContent={'center'} padding={'15px'}>
+        <React.Fragment>
             <StyledTransitionGroup>
             {posts.map((post: PostProps, index: number) =>
                 <CSSTransition
@@ -68,7 +68,7 @@ const PostList = ({posts, remove,isPostsLoading, postError}: PostListProps)=> {
                 </CSSTransition>
             )}
             </StyledTransitionGroup>
-        </Flex>
+        </React.Fragment>
 
     );
 };
