@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Navigation from "../components/Navigation";
 import Flex from "../components/Flex";
 import Menu from "../components/Menu";
@@ -39,20 +39,43 @@ const Home = ({ searchQuery }: { searchQuery: string }) => {
     const [posts, setPosts] = useState(initialPosts);
     const [filter, setFilter] = useState({sort:''});
     const [totalPages, setTotalPages] = useState(0);
-    const [limit, setLimit] = useState(20);
+    const [limit, setLimit] = useState(5);
     const [page, setPage] = useState(1);
     const sortedAndSearchedPosts = usePosts(posts, filter.sort, searchQuery);
+    const lastElement = useRef<HTMLDivElement | null>(null);
+    const observer = useRef<IntersectionObserver | null>(null);
+
 
 
     const [fetchPostsData, isPostsLoading, postError] = useFetching(async (limit, page) =>{
         const response = await PostService.getAll(limit, page);
-        setPosts(response.data);
+        setPosts([...posts, ...response.data]);
         const totalCount = response.headers['x-total-count']
         setTotalPages(getPageCount(totalCount, limit));
     })
+
+
+    // need to fix when post adding scroll throwing in up of page
+    useEffect(() => {
+        if(isPostsLoading) return;
+        if(observer.current) observer.current?.disconnect();
+        const callback: IntersectionObserverCallback = (entries: { isIntersecting: any; }[]) => {
+            if(entries[0].isIntersecting && page < totalPages){
+                console.log(page)
+                setPage(page + 1)
+            }
+
+        }
+        observer.current = new IntersectionObserver(callback);
+        if (lastElement.current) {
+            observer.current.observe(lastElement.current);
+        }
+
+    }, [isPostsLoading])
+
     useEffect(() => {
         fetchPostsData(limit,page);
-    }, []);
+    }, [page]);
 
 
     const createPost = (newPost: PostProps)  => {
@@ -63,7 +86,6 @@ const Home = ({ searchQuery }: { searchQuery: string }) => {
     }
     const changePage = (page:number) => {
         setPage(page);
-        fetchPostsData(limit,page);
     }
 
 
@@ -80,9 +102,7 @@ const Home = ({ searchQuery }: { searchQuery: string }) => {
                         <CreateANewPost create={createPost} />
                         <PostFilter filter={filter} setFilter={setFilter} />
                         <PostList remove={removePost} posts={sortedAndSearchedPosts} isPostsLoading={isPostsLoading} postError={postError}/>
-                    </div>
-                    <div>
-                        <Pagination totalPages={totalPages} page={page} changePage={changePage} />
+                        <div ref={lastElement}></div>
                     </div>
                 </PostsWrapper>
                 <EmptySpace />
