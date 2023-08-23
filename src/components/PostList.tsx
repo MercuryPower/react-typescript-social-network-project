@@ -1,15 +1,7 @@
-import React, {useState} from 'react';
-import Flex from "./Flex";
+import React from 'react';
 import Post, {PostProps} from "./Post";
 import {TransitionGroup, CSSTransition} from "react-transition-group";
 import styled from "styled-components";
-import LoadingSpinner from "../UI/Loading Spinner/LoadingSpinner";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faFontAwesome, faRotateRight} from "@fortawesome/free-solid-svg-icons";
-import Span from "../UI/Span/Span";
-import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons/faMagnifyingGlass";
-import Shaking from "../UI/Animation/Shaking";
-import Rotating from "../UI/Animation/Rotating";
 import ErrorMessage from "./ErrorMessage";
 import NoPosts from "./NoPosts";
 
@@ -52,7 +44,7 @@ const PostList = ({posts, remove,isPostsLoading, postError}: PostListProps)=> {
             <ErrorMessage postError={postError} />
         )
     }
-    if(!isPostsLoading && posts.length < 0){
+    if(!isPostsLoading && !posts.length){
         return(
            <NoPosts />
             )

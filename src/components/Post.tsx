@@ -28,6 +28,7 @@ export interface PostProps {
     title?:string;
     body?:string;
     number?: number;
+    photo?:string;
     remove:(post: PostProps) => void;
 }
 
@@ -49,20 +50,21 @@ const Post = (props : PostProps) => {
     return (
         <>
             <StyledPost>
-                <Flex justifyContent={'space-between'} alignItems={'center'}>
-                    <div>
+                <Flex justifyContent={'space-between'} wrap={'nowrap'} alignItems={'center'}>
                         <h4><strong>{props.id}. {props.title}</strong></h4>
-                    </div>
                     <Flex justifyContent={'flex-end'} direction={'column'}>
                         <Flex direction={'column'} alignItems={'flex-end'}>
-                            <Button color={'white'} onClick={() => {navigate(`/home/${props.id}`)}} radius={'25px'} margin={'0 0 7px 0'}><FontAwesomeIcon icon={faEye} /><b> Show</b></Button>
+                            <Button color={'white'} onClick={() => {navigate(`/home/${props.id}`)}} margin={'0 0 7px 0'}>
+                                <FontAwesomeIcon icon={faEye} />
+                            </Button>
                         </Flex>
                         <Flex direction={'column'} alignItems={'flex-end'}>
-                            <Button color={'white'}  onClick={handleShowModal} radius={'25px'}><FontAwesomeIcon icon={faTrashCan} /> Delete</Button>
+                            <Button color={'white'}  onClick={handleShowModal} radius={'25px'}><FontAwesomeIcon icon={faTrashCan} /></Button>
                         </Flex>
                     </Flex>
                 </Flex>
                 <StyledPostText>{props.body}</StyledPostText>
+                <div></div>
             </StyledPost>
             <ModalWindow show={modalShow} onClose={handleCloseModal} onConfirm={handleRemove} confirmButtonText={' Delete this post'} cancelButtonText={" Close"}>
                 Are you sure?

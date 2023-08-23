@@ -12,6 +12,9 @@ import PostService from "../API/PostService";
 import {getPageCount} from "../components/utils/pages";
 import {PostProps} from "../components/Post";
 import styled from "styled-components";
+import {useObserver} from "../hooks/useObserver";
+import LoadingSpinner from "../UI/Loading Spinner/LoadingSpinner";
+import NoPosts from "../components/NoPosts";
 
 
 const MenuWrapper = styled.div`
@@ -43,7 +46,7 @@ const Home = ({ searchQuery }: { searchQuery: string }) => {
     const [page, setPage] = useState(1);
     const sortedAndSearchedPosts = usePosts(posts, filter.sort, searchQuery);
     const lastElement = useRef<HTMLDivElement | null>(null);
-    const observer = useRef<IntersectionObserver | null>(null);
+    const hasPostsToLoad = sortedAndSearchedPosts.length > 0;
 
 
 
@@ -56,23 +59,9 @@ const Home = ({ searchQuery }: { searchQuery: string }) => {
 
 
     // need to fix when post adding scroll throwing in up of page
-    useEffect(() => {
-        if(isPostsLoading) return;
-        if(observer.current) observer.current?.disconnect();
-        const callback: IntersectionObserverCallback = (entries: { isIntersecting: any; }[]) => {
-            if(entries[0].isIntersecting && page < totalPages){
-                console.log(page)
-                setPage(page + 1)
-            }
-
-        }
-        observer.current = new IntersectionObserver(callback);
-        if (lastElement.current) {
-            observer.current.observe(lastElement.current);
-        }
-
-    }, [isPostsLoading])
-
+    useObserver(lastElement, page < totalPages && !isPostsLoading,isPostsLoading,hasPostsToLoad, () => {
+        setPage((prevPage) => prevPage + 1)
+    })
     useEffect(() => {
         fetchPostsData(limit,page);
     }, [page]);
@@ -83,9 +72,6 @@ const Home = ({ searchQuery }: { searchQuery: string }) => {
     }
     const removePost = (post: PostProps) => {
         setPosts(posts.filter((p) => p.id !== post?.id))
-    }
-    const changePage = (page:number) => {
-        setPage(page);
     }
 
 
@@ -102,8 +88,9 @@ const Home = ({ searchQuery }: { searchQuery: string }) => {
                         <CreateANewPost create={createPost} />
                         <PostFilter filter={filter} setFilter={setFilter} />
                         <PostList remove={removePost} posts={sortedAndSearchedPosts} isPostsLoading={isPostsLoading} postError={postError}/>
-                        <div ref={lastElement}></div>
+                        {isPostsLoading && posts.length > 0 && <LoadingSpinner />}
                     </div>
+                    <div ref={lastElement}></div>
                 </PostsWrapper>
                 <EmptySpace />
             </Flex>
