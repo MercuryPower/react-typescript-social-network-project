@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, {useState} from 'react';
 import Flex from "./Flex";
 import '../App.scss'
 import Button from "../UI/Button/Button";
@@ -24,11 +24,12 @@ const StyledPostText = styled.p`
     font-size:18px;
 `
 export interface PostProps {
-    id?:number;
+    id:number;
     title?:string;
     body?:string;
     number?: number;
     photo?:string;
+    date?:string | number;
     remove:(post: PostProps) => void;
 }
 
@@ -51,7 +52,15 @@ const Post = (props : PostProps) => {
         <>
             <StyledPost>
                 <Flex justifyContent={'space-between'} wrap={'nowrap'} alignItems={'center'}>
-                        <h4><strong>{props.id}. {props.title}</strong></h4>
+                    <div>
+                        <h4><strong>{props.title}</strong></h4>
+                        <div className={'date_block'}>
+                            <h6>{props.date}</h6>
+                        </div>
+                    </div>
+                    <div>
+                        {props.photo}
+                    </div>
                     <Flex justifyContent={'flex-end'} direction={'column'}>
                         <Flex direction={'column'} alignItems={'flex-end'}>
                             <Button color={'white'} onClick={() => {navigate(`/home/${props.id}`)}} margin={'0 0 7px 0'}>
@@ -63,8 +72,8 @@ const Post = (props : PostProps) => {
                         </Flex>
                     </Flex>
                 </Flex>
+                <br/>
                 <StyledPostText>{props.body}</StyledPostText>
-                <div></div>
             </StyledPost>
             <ModalWindow show={modalShow} onClose={handleCloseModal} onConfirm={handleRemove} confirmButtonText={' Delete this post'} cancelButtonText={" Close"}>
                 Are you sure?

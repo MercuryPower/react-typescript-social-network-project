@@ -8,9 +8,7 @@ import {PostProps, StyledPost} from "./Post";
 import styled from "styled-components";
 
 
-const StyledPostById = styled(StyledPost)`
-  height: 0;
-`
+
 interface CommentsProps {
     postId: number;
     id: number;
@@ -18,10 +16,17 @@ interface CommentsProps {
     email:string;
     body:string;
 }
+interface PhotosProps {
+    postId: number;
+    id: number;
+    title:string;
+    url:string;
+}
 const PostPage = () => {
     const params = useParams();
-    const [post, setPost] = useState<PostProps | null>(null);
+    const [post, setPost    ] = useState<PostProps | null>(null);
     const [comments, setComments] = useState([]);
+    const [photos, setPhotos] = useState([]);
     const [fetchPostById, isLoading, error] = useFetching(async (id) => {
        const response = await PostService.getById(id);
        setPost(response.data);
@@ -30,10 +35,16 @@ const PostPage = () => {
         const response = await PostService.getCommentsByPostId(id);
         setComments(response.data);
     })
+    const [fetchPhotos, isPhotosLoading, photoError] = useFetching(async (id) => {
+        const response = await PostService.getPhotoById(id);
+        setPhotos(response.data);
+    })
 
     useEffect(() => {
         fetchPostById(params.id);
         fetchComments(params.id);
+        fetchPhotos(params.id);
+
     }, [])
     return (
         <div>

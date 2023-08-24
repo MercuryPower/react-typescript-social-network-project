@@ -9,7 +9,6 @@
 }
 
 .PostBox{
-    max-width: 100%;
     border: 1px solid black;
     border-radius: 25px;
     background: linear-gradient(90deg, rgba(89, 83, 255, 0.8) 0%, rgba(135, 135, 212, 1) 50%, rgba(126, 199, 214, 1) 100%);
@@ -57,5 +56,8 @@
 .logOut_button{
   cursor: pointer;
   margin-left:10px;
+}
+.date_block{
+  opacity: 75%;
 }
 

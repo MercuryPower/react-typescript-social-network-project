@@ -59,13 +59,15 @@ const Navigation:React.FC<NavigationProps> = (props) => {
                             <Nav.Link as={Link} to={'/about'}>
                                 About
                             </Nav.Link>
-                            <Nav.Link onClick={logOut}>
-                                <FontAwesomeIcon  icon={faRightToBracket} />
-                            </Nav.Link>
+
                         </Nav>
                     </Navbar.Collapse>
                         <FontAwesomeIcon icon={faMagnifyingGlass} />
                         <Input type={'text'} onChange={handleInputChange}  placeholder={'Search'} value={searchQuery}></Input>
+                    <hr />
+                        <Nav.Link onClick={logOut}>
+                            <FontAwesomeIcon  icon={faRightToBracket} />
+                        </Nav.Link>
                 </CenteredContainer>
             </StyledNavbar>
         );

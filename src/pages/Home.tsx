@@ -37,9 +37,8 @@ const EmptySpace = styled.div`
   flex: 1;
 `;
 
-const initialPosts: PostProps[] = [];
 const Home = ({ searchQuery }: { searchQuery: string }) => {
-    const [posts, setPosts] = useState(initialPosts);
+    const [posts, setPosts] = useState<PostProps[]>([]);
     const [filter, setFilter] = useState({sort:''});
     const [totalPages, setTotalPages] = useState(0);
     const [limit, setLimit] = useState(5);
@@ -58,7 +57,7 @@ const Home = ({ searchQuery }: { searchQuery: string }) => {
     })
 
 
-    // need to fix when post adding scroll throwing in up of page
+
     useObserver(lastElement, page < totalPages && !isPostsLoading,isPostsLoading,hasPostsToLoad, () => {
         setPage((prevPage) => prevPage + 1)
     })
@@ -86,7 +85,7 @@ const Home = ({ searchQuery }: { searchQuery: string }) => {
                     <br/>
                     <div>
                         <CreateANewPost create={createPost} />
-                        <PostFilter filter={filter} setFilter={setFilter} />
+                        {/*<PostFilter filter={filter} setFilter={setFilter} />*/}
                         <PostList remove={removePost} posts={sortedAndSearchedPosts} isPostsLoading={isPostsLoading} postError={postError}/>
                         {isPostsLoading && posts.length > 0 && <LoadingSpinner />}
                     </div>
