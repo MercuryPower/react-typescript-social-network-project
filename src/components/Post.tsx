@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, {useState} from 'react';
 import Flex from "./Flex";
 import '../App.scss'
 import Button from "../UI/Button/Button";
@@ -14,7 +14,7 @@ export const StyledPost = styled.div`
     margin:1rem;
     border: 1px solid black;
     border-radius: 25px;
-    height: 500px;
+    height: fit-content;
     justify-content: center;
     word-break: break-all;
     background: linear-gradient(90deg, rgba(89, 83, 255, 0.8) 0%, rgba(135, 135, 212, 1) 50%, rgba(126, 199, 214, 1) 100%);
@@ -22,12 +22,16 @@ export const StyledPost = styled.div`
 `
 const StyledPostText = styled.p`
     font-size:18px;
+    max-height: 4.5em;
+    overflow: hidden;
 `
 export interface PostProps {
-    id?:number;
+    id:number;
     title?:string;
     body?:string;
     number?: number;
+    photoUrl?: string;
+    date?:string | number;
     remove:(post: PostProps) => void;
 }
 
@@ -49,19 +53,28 @@ const Post = (props : PostProps) => {
     return (
         <>
             <StyledPost>
-                <Flex justifyContent={'space-between'} alignItems={'center'}>
+                <Flex justifyContent={'space-between'} wrap={'nowrap'} alignItems={'center'}>
                     <div>
-                        <h4><strong>{props.id}. {props.title}</strong></h4>
+                        <h4><strong>{props.title}</strong></h4>
+                        <div className={'date_block'}>
+                            <h6>{props.date}</h6>
+                        </div>
                     </div>
                     <Flex justifyContent={'flex-end'} direction={'column'}>
                         <Flex direction={'column'} alignItems={'flex-end'}>
-                            <Button color={'white'} onClick={() => {navigate(`/home/${props.id}`)}} radius={'25px'} margin={'0 0 7px 0'}><FontAwesomeIcon icon={faEye} /><b> Show</b></Button>
+                            <Button color={'white'} onClick={() => {navigate(`/home/${props.id}`)}} margin={'0 0 7px 0'}>
+                                <FontAwesomeIcon icon={faEye} />
+                            </Button>
                         </Flex>
                         <Flex direction={'column'} alignItems={'flex-end'}>
-                            <Button color={'white'}  onClick={handleShowModal} radius={'25px'}><FontAwesomeIcon icon={faTrashCan} /> Delete</Button>
+                            <Button color={'white'}  onClick={handleShowModal} radius={'25px'}><FontAwesomeIcon icon={faTrashCan} /></Button>
                         </Flex>
                     </Flex>
                 </Flex>
+                <div className={'post_photo'}>
+                    <img src={props.photoUrl} alt={props.title} />
+                </div>
+                <br/>
                 <StyledPostText>{props.body}</StyledPostText>
             </StyledPost>
             <ModalWindow show={modalShow} onClose={handleCloseModal} onConfirm={handleRemove} confirmButtonText={' Delete this post'} cancelButtonText={" Close"}>

@@ -12,6 +12,9 @@ import PostService from "../API/PostService";
 import {getPageCount} from "../components/utils/pages";
 import {PostProps} from "../components/Post";
 import styled from "styled-components";
+import {useObserver} from "../hooks/useObserver";
+import LoadingSpinner from "../UI/Loading Spinner/LoadingSpinner";
+import NoPosts from "../components/NoPosts";
 
 
 const MenuWrapper = styled.div`
@@ -34,45 +37,33 @@ const EmptySpace = styled.div`
   flex: 1;
 `;
 
-const initialPosts: PostProps[] = [];
 const Home = ({ searchQuery }: { searchQuery: string }) => {
-    const [posts, setPosts] = useState(initialPosts);
+    const [posts, setPosts] = useState<PostProps[]>([]);
     const [filter, setFilter] = useState({sort:''});
     const [totalPages, setTotalPages] = useState(0);
     const [limit, setLimit] = useState(5);
     const [page, setPage] = useState(1);
     const sortedAndSearchedPosts = usePosts(posts, filter.sort, searchQuery);
     const lastElement = useRef<HTMLDivElement | null>(null);
-    const observer = useRef<IntersectionObserver | null>(null);
+    const hasPostsToLoad = sortedAndSearchedPosts.length > 0;
+    const [postsPhoto, setPostsPhoto] = useState<string[]>([]);
 
 
 
     const [fetchPostsData, isPostsLoading, postError] = useFetching(async (limit, page) =>{
         const response = await PostService.getAll(limit, page);
-        setPosts([...posts, ...response.data]);
+        const photoResponse = await PostService.getAllPhotos();
+        const extractedUrls = photoResponse.data.map((photo: { url: string; }) => photo.url); // Извлекаем URL фотографий
+        setPostsPhoto(extractedUrls);
+        console.log(photoResponse.data)
+        setPosts([...posts, ...response.data ]);
         const totalCount = response.headers['x-total-count']
         setTotalPages(getPageCount(totalCount, limit));
     })
 
-
-    // need to fix when post adding scroll throwing in up of page
-    useEffect(() => {
-        if(isPostsLoading) return;
-        if(observer.current) observer.current?.disconnect();
-        const callback: IntersectionObserverCallback = (entries: { isIntersecting: any; }[]) => {
-            if(entries[0].isIntersecting && page < totalPages){
-                console.log(page)
-                setPage(page + 1)
-            }
-
-        }
-        observer.current = new IntersectionObserver(callback);
-        if (lastElement.current) {
-            observer.current.observe(lastElement.current);
-        }
-
-    }, [isPostsLoading])
-
+    useObserver(lastElement, page < totalPages && !isPostsLoading,isPostsLoading,hasPostsToLoad, () => {
+        setPage((prevPage) => prevPage + 1)
+    })
     useEffect(() => {
         fetchPostsData(limit,page);
     }, [page]);
@@ -83,9 +74,6 @@ const Home = ({ searchQuery }: { searchQuery: string }) => {
     }
     const removePost = (post: PostProps) => {
         setPosts(posts.filter((p) => p.id !== post?.id))
-    }
-    const changePage = (page:number) => {
-        setPage(page);
     }
 
 
@@ -100,10 +88,17 @@ const Home = ({ searchQuery }: { searchQuery: string }) => {
                     <br/>
                     <div>
                         <CreateANewPost create={createPost} />
-                        <PostFilter filter={filter} setFilter={setFilter} />
-                        <PostList remove={removePost} posts={sortedAndSearchedPosts} isPostsLoading={isPostsLoading} postError={postError}/>
-                        <div ref={lastElement}></div>
+                        {/*<PostFilter filter={filter} setFilter={setFilter} />*/}
+                        <PostList
+                            photoUrls={postsPhoto}
+                            remove={removePost}
+                            posts={sortedAndSearchedPosts}
+                            isPostsLoading={isPostsLoading}
+                            postError={postError}
+                        />
+                        {isPostsLoading && posts.length > 0 && <LoadingSpinner />}
                     </div>
+                    <div ref={lastElement}></div>
                 </PostsWrapper>
                 <EmptySpace />
             </Flex>

@@ -9,7 +9,6 @@
 }
 
 .PostBox{
-    max-width: 100%;
     border: 1px solid black;
     border-radius: 25px;
     background: linear-gradient(90deg, rgba(89, 83, 255, 0.8) 0%, rgba(135, 135, 212, 1) 50%, rgba(126, 199, 214, 1) 100%);
@@ -57,5 +56,39 @@
 .logOut_button{
   cursor: pointer;
   margin-left:10px;
+}
+.date_block{
+  opacity: 75%;
+}
+.post_block{
+  display: flex;
+  color:white;
+  justify-content: center;
+  margin: 30px auto;
+}
+.post_content{
+  @extend .PostBox;
+  display: flex;
+  padding: 30px;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+
+}
+.post_photo{
+  margin-top:15px;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+.post_photo img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.post_page_photo img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 

@@ -8,9 +8,7 @@ import {PostProps, StyledPost} from "./Post";
 import styled from "styled-components";
 
 
-const StyledPostById = styled(StyledPost)`
-  height: 0;
-`
+
 interface CommentsProps {
     postId: number;
     id: number;
@@ -18,10 +16,17 @@ interface CommentsProps {
     email:string;
     body:string;
 }
+interface PhotosProps {
+    postId: number;
+    id: number;
+    title:string;
+    url:string;
+}
 const PostPage = () => {
     const params = useParams();
-    const [post, setPost] = useState<PostProps | null>(null);
+    const [post, setPost    ] = useState<PostProps | null>(null);
     const [comments, setComments] = useState([]);
+    const [photos, setPhotos] = useState<PhotosProps>();
     const [fetchPostById, isLoading, error] = useFetching(async (id) => {
        const response = await PostService.getById(id);
        setPost(response.data);
@@ -30,22 +35,31 @@ const PostPage = () => {
         const response = await PostService.getCommentsByPostId(id);
         setComments(response.data);
     })
+    const [fetchPhotos, isPhotosLoading, photoError] = useFetching(async (id) => {
+        const response = await PostService.getPhotoById(id);
+        setPhotos(response.data);
+    })
 
     useEffect(() => {
         fetchPostById(params.id);
         fetchComments(params.id);
+        fetchPhotos(params.id);
+
     }, [])
     return (
         <div>
             {post !== null ? (
-                    <>
-                        <Flex justifyContent={'center'} margin={'2rem'}>
-                            <h1>{post.id} {post.title}</h1>
-                        </Flex>
-                        <Flex justifyContent={'center'} direction={'column'} alignItems={'center'}>
-                            {post.body}
-                        </Flex>
-                    </>
+                    <div className={'post_block'}>
+                        <div className={'post_content'}>
+                                <h1>{post.title}</h1>
+                                    <div>
+                                        {post.body}
+                                    </div>
+                            <div style={{margin:'2rem'}}>
+                                <img style={{maxWidth:'100%'}} src={photos?.url} alt={post.title}/>
+                            </div>
+                        </div>
+                    </div>
                 )
                 :
                     <LoadingSpinner />

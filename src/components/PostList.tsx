@@ -1,17 +1,11 @@
-import React, {useState} from 'react';
-import Flex from "./Flex";
+import React from 'react';
 import Post, {PostProps} from "./Post";
 import {TransitionGroup, CSSTransition} from "react-transition-group";
 import styled from "styled-components";
-import LoadingSpinner from "../UI/Loading Spinner/LoadingSpinner";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faFontAwesome, faRotateRight} from "@fortawesome/free-solid-svg-icons";
-import Span from "../UI/Span/Span";
-import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons/faMagnifyingGlass";
-import Shaking from "../UI/Animation/Shaking";
-import Rotating from "../UI/Animation/Rotating";
 import ErrorMessage from "./ErrorMessage";
 import NoPosts from "./NoPosts";
+import {format} from "date-fns";
+import PostService from "../API/PostService";
 
 const StyledTransitionGroup = styled(TransitionGroup)`
   .post-enter {
@@ -38,10 +32,13 @@ interface PostListProps {
     remove: (post: PostProps) => void;
     isPostsLoading:boolean;
     postError:string;
+    photoUrls: string[];
 }
 
 
-const PostList = ({posts, remove,isPostsLoading, postError}: PostListProps)=> {
+const PostList = ({posts,photoUrls, remove,isPostsLoading, postError}: PostListProps)=> {
+
+
     // if(isPostsLoading){
     //     return (
     //             <LoadingSpinner /> // bug when posts loading with observation api I will remove that and it's works, need to fix
@@ -52,7 +49,7 @@ const PostList = ({posts, remove,isPostsLoading, postError}: PostListProps)=> {
             <ErrorMessage postError={postError} />
         )
     }
-    if(!isPostsLoading && posts.length < 0){
+    if(!isPostsLoading && !posts.length){
         return(
            <NoPosts />
             )
@@ -66,7 +63,7 @@ const PostList = ({posts, remove,isPostsLoading, postError}: PostListProps)=> {
                     timeout={500}
                     classNames="post"
                 >
-                    <Post  number={index + 1} {...post} remove={remove} />
+                    <Post  photoUrl={photoUrls[index] || ''} date={format(new Date(), "'today' h:mm aaaa")}  number={index + 1} {...post} remove={remove} />
                 </CSSTransition>
             )}
             </StyledTransitionGroup>
