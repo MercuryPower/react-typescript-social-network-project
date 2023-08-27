@@ -65,7 +65,7 @@ const Navigation:React.FC<NavigationProps> = (props) => {
                         <FontAwesomeIcon icon={faMagnifyingGlass} />
                         <Input type={'text'} onChange={handleInputChange}  placeholder={'Search'} value={searchQuery}></Input>
                     <hr />
-                        <Nav.Link onClick={logOut}>
+                        <Nav.Link style={{marginLeft:'30px'}} onClick={logOut}>
                             <FontAwesomeIcon  icon={faRightToBracket} />
                         </Nav.Link>
                 </CenteredContainer>

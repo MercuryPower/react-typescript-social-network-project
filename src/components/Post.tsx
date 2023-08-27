@@ -14,7 +14,7 @@ export const StyledPost = styled.div`
     margin:1rem;
     border: 1px solid black;
     border-radius: 25px;
-    height: 500px;
+    height: fit-content;
     justify-content: center;
     word-break: break-all;
     background: linear-gradient(90deg, rgba(89, 83, 255, 0.8) 0%, rgba(135, 135, 212, 1) 50%, rgba(126, 199, 214, 1) 100%);
@@ -22,13 +22,15 @@ export const StyledPost = styled.div`
 `
 const StyledPostText = styled.p`
     font-size:18px;
+    max-height: 4.5em;
+    overflow: hidden;
 `
 export interface PostProps {
     id:number;
     title?:string;
     body?:string;
     number?: number;
-    photo?:string;
+    photoUrl?: string;
     date?:string | number;
     remove:(post: PostProps) => void;
 }
@@ -58,9 +60,6 @@ const Post = (props : PostProps) => {
                             <h6>{props.date}</h6>
                         </div>
                     </div>
-                    <div>
-                        {props.photo}
-                    </div>
                     <Flex justifyContent={'flex-end'} direction={'column'}>
                         <Flex direction={'column'} alignItems={'flex-end'}>
                             <Button color={'white'} onClick={() => {navigate(`/home/${props.id}`)}} margin={'0 0 7px 0'}>
@@ -72,6 +71,9 @@ const Post = (props : PostProps) => {
                         </Flex>
                     </Flex>
                 </Flex>
+                <div className={'post_photo'}>
+                    <img src={props.photoUrl} alt={props.title} />
+                </div>
                 <br/>
                 <StyledPostText>{props.body}</StyledPostText>
             </StyledPost>

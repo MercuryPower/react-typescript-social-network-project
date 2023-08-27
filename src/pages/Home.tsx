@@ -46,17 +46,20 @@ const Home = ({ searchQuery }: { searchQuery: string }) => {
     const sortedAndSearchedPosts = usePosts(posts, filter.sort, searchQuery);
     const lastElement = useRef<HTMLDivElement | null>(null);
     const hasPostsToLoad = sortedAndSearchedPosts.length > 0;
+    const [postsPhoto, setPostsPhoto] = useState<string[]>([]);
 
 
 
     const [fetchPostsData, isPostsLoading, postError] = useFetching(async (limit, page) =>{
         const response = await PostService.getAll(limit, page);
-        setPosts([...posts, ...response.data]);
+        const photoResponse = await PostService.getAllPhotos();
+        const extractedUrls = photoResponse.data.map((photo: { url: string; }) => photo.url); // Извлекаем URL фотографий
+        setPostsPhoto(extractedUrls);
+        console.log(photoResponse.data)
+        setPosts([...posts, ...response.data ]);
         const totalCount = response.headers['x-total-count']
         setTotalPages(getPageCount(totalCount, limit));
     })
-
-
 
     useObserver(lastElement, page < totalPages && !isPostsLoading,isPostsLoading,hasPostsToLoad, () => {
         setPage((prevPage) => prevPage + 1)
@@ -86,7 +89,13 @@ const Home = ({ searchQuery }: { searchQuery: string }) => {
                     <div>
                         <CreateANewPost create={createPost} />
                         {/*<PostFilter filter={filter} setFilter={setFilter} />*/}
-                        <PostList remove={removePost} posts={sortedAndSearchedPosts} isPostsLoading={isPostsLoading} postError={postError}/>
+                        <PostList
+                            photoUrls={postsPhoto}
+                            remove={removePost}
+                            posts={sortedAndSearchedPosts}
+                            isPostsLoading={isPostsLoading}
+                            postError={postError}
+                        />
                         {isPostsLoading && posts.length > 0 && <LoadingSpinner />}
                     </div>
                     <div ref={lastElement}></div>

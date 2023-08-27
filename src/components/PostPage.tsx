@@ -26,7 +26,7 @@ const PostPage = () => {
     const params = useParams();
     const [post, setPost    ] = useState<PostProps | null>(null);
     const [comments, setComments] = useState([]);
-    const [photos, setPhotos] = useState([]);
+    const [photos, setPhotos] = useState<PhotosProps>();
     const [fetchPostById, isLoading, error] = useFetching(async (id) => {
        const response = await PostService.getById(id);
        setPost(response.data);
@@ -49,14 +49,17 @@ const PostPage = () => {
     return (
         <div>
             {post !== null ? (
-                    <>
-                        <Flex justifyContent={'center'} margin={'2rem'}>
-                            <h1>{post.id} {post.title}</h1>
-                        </Flex>
-                        <Flex justifyContent={'center'} direction={'column'} alignItems={'center'}>
-                            {post.body}
-                        </Flex>
-                    </>
+                    <div className={'post_block'}>
+                        <div className={'post_content'}>
+                                <h1>{post.title}</h1>
+                                    <div>
+                                        {post.body}
+                                    </div>
+                            <div style={{margin:'2rem'}}>
+                                <img style={{maxWidth:'100%'}} src={photos?.url} alt={post.title}/>
+                            </div>
+                        </div>
+                    </div>
                 )
                 :
                     <LoadingSpinner />

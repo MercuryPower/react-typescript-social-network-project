@@ -5,6 +5,7 @@ import styled from "styled-components";
 import ErrorMessage from "./ErrorMessage";
 import NoPosts from "./NoPosts";
 import {format} from "date-fns";
+import PostService from "../API/PostService";
 
 const StyledTransitionGroup = styled(TransitionGroup)`
   .post-enter {
@@ -31,10 +32,12 @@ interface PostListProps {
     remove: (post: PostProps) => void;
     isPostsLoading:boolean;
     postError:string;
+    photoUrls: string[];
 }
 
 
-const PostList = ({posts, remove,isPostsLoading, postError}: PostListProps)=> {
+const PostList = ({posts,photoUrls, remove,isPostsLoading, postError}: PostListProps)=> {
+
 
     // if(isPostsLoading){
     //     return (
@@ -60,7 +63,7 @@ const PostList = ({posts, remove,isPostsLoading, postError}: PostListProps)=> {
                     timeout={500}
                     classNames="post"
                 >
-                    <Post date={format(new Date(), "'today' h:mm aaaa")}  number={index + 1} {...post} remove={remove} />
+                    <Post  photoUrl={photoUrls[index] || ''} date={format(new Date(), "'today' h:mm aaaa")}  number={index + 1} {...post} remove={remove} />
                 </CSSTransition>
             )}
             </StyledTransitionGroup>
