@@ -12,6 +12,7 @@ import {useNavigate} from "react-router-dom";
 export const StyledPost = styled.div`
     padding:1rem;
     margin:1rem;
+    width: 550px;
     border: 1px solid black;
     border-radius: 25px;
     height: fit-content;
@@ -47,7 +48,7 @@ const Post = (props : PostProps) => {
     const handleShowModal = () =>{
         setModalShow(true);
     }
-    const handleRemove = () => {
+    const handleRemovePost = () => {
         props.remove(props)
     };
     return (
@@ -77,7 +78,7 @@ const Post = (props : PostProps) => {
                 <br/>
                 <StyledPostText>{props.body}</StyledPostText>
             </StyledPost>
-            <ModalWindow show={modalShow} onClose={handleCloseModal} onConfirm={handleRemove} confirmButtonText={' Delete this post'} cancelButtonText={" Close"}>
+            <ModalWindow show={modalShow} onClose={handleCloseModal} onConfirm={handleRemovePost} confirmButtonText={' Delete this post'} cancelButtonText={" Close"}>
                 Are you sure?
                 The data will be lost.
             </ModalWindow>

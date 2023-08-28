@@ -4,9 +4,7 @@ import {useFetching} from "../hooks/useFetching";
 import PostService from "../API/PostService";
 import {useParams} from "react-router-dom";
 import LoadingSpinner from '../UI/Loading Spinner/LoadingSpinner';
-import {PostProps, StyledPost} from "./Post";
-import styled from "styled-components";
-
+import {PostProps} from "./Post";
 
 
 interface CommentsProps {
@@ -27,15 +25,15 @@ const PostPage = () => {
     const [post, setPost    ] = useState<PostProps | null>(null);
     const [comments, setComments] = useState([]);
     const [photos, setPhotos] = useState<PhotosProps>();
-    const [fetchPostById, isLoading, error] = useFetching(async (id) => {
+    const [fetchPostById, isPostLoading, postError] = useFetching(async (id) => {
        const response = await PostService.getById(id);
        setPost(response.data);
     })
-    const [fetchComments, isComLoading, comError] = useFetching(async (id) => {
+    const [fetchComments, isCommentLoading, commentError] = useFetching(async (id) => {
         const response = await PostService.getCommentsByPostId(id);
         setComments(response.data);
     })
-    const [fetchPhotos, isPhotosLoading, photoError] = useFetching(async (id) => {
+    const [fetchPhotos, isPhotoLoading, photoError] = useFetching(async (id) => {
         const response = await PostService.getPhotoById(id);
         setPhotos(response.data);
     })
@@ -55,8 +53,8 @@ const PostPage = () => {
                                     <div>
                                         {post.body}
                                     </div>
-                            <div style={{margin:'2rem'}}>
-                                <img style={{maxWidth:'100%'}} src={photos?.url} alt={post.title}/>
+                            <div className={'post_page_photo'}>
+                                <img src={photos?.url} alt={post.title}/>
                             </div>
                         </div>
                     </div>
@@ -67,7 +65,7 @@ const PostPage = () => {
             <Flex justifyContent={'center'} margin={'5rem 0 0 0'}>
                 <h2>Comments:</h2>
             </Flex>
-                {isComLoading ?
+                {isCommentLoading ?
                     <LoadingSpinner />
                 :
                     <Flex>

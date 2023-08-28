@@ -37,8 +37,6 @@ interface PostListProps {
 
 
 const PostList = ({posts,photoUrls, remove,isPostsLoading, postError}: PostListProps)=> {
-
-
     // if(isPostsLoading){
     //     return (
     //             <LoadingSpinner /> // bug when posts loading with observation api I will remove that and it's works, need to fix

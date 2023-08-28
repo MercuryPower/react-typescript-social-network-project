@@ -1,11 +1,8 @@
 import React, {useEffect, useRef, useState} from 'react';
-import Navigation from "../components/Navigation";
 import Flex from "../components/Flex";
 import Menu from "../components/Menu";
 import CreateANewPost from "../components/CreateANewPost";
-import PostFilter from "../components/PostFilter";
 import PostList from "../components/PostList";
-import Pagination from "../components/Pagination";
 import {usePosts} from "../hooks/usePosts";
 import {useFetching} from "../hooks/useFetching";
 import PostService from "../API/PostService";
@@ -14,7 +11,6 @@ import {PostProps} from "../components/Post";
 import styled from "styled-components";
 import {useObserver} from "../hooks/useObserver";
 import LoadingSpinner from "../UI/Loading Spinner/LoadingSpinner";
-import NoPosts from "../components/NoPosts";
 
 
 const MenuWrapper = styled.div`
@@ -86,7 +82,7 @@ const Home = ({ searchQuery }: { searchQuery: string }) => {
                 </MenuWrapper>
                 <PostsWrapper>
                     <br/>
-                    <div>
+                    <React.Fragment>
                         <CreateANewPost create={createPost} />
                         {/*<PostFilter filter={filter} setFilter={setFilter} />*/}
                         <PostList
@@ -96,8 +92,8 @@ const Home = ({ searchQuery }: { searchQuery: string }) => {
                             isPostsLoading={isPostsLoading}
                             postError={postError}
                         />
-                        {isPostsLoading && posts.length > 0 && <LoadingSpinner />}
-                    </div>
+                        {isPostsLoading && posts.length < 0 && <LoadingSpinner />}
+                    </React.Fragment>
                     <div ref={lastElement}></div>
                 </PostsWrapper>
                 <EmptySpace />
