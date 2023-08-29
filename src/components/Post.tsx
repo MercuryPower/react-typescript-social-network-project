@@ -58,7 +58,7 @@ const Post = (props : PostProps) => {
                     <div>
                         <h4><strong>{props.title}</strong></h4>
                         <div className={'date_block'}>
-                            <h6>{props.date}</h6>
+                            <time>{props.date}</time>
                         </div>
                     </div>
                     <Flex justifyContent={'flex-end'} direction={'column'}>

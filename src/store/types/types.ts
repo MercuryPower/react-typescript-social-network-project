@@ -6,19 +6,19 @@ export interface PostState {
     error: null | string;
 }
 
-export enum PostActionTypes{
+export enum PostActionTypes {
     FETCH_POSTS = 'FETCH_POSTS',
     FETCH_POSTS_SUCCESS = 'FETCH_POSTS_SUCCESS',
     FETCH_POSTS_ERROR = 'FETCH_POSTS_ERROR'
 }
-export interface FetchPostsAction{
+interface FetchPostsAction{
     type: PostActionTypes.FETCH_POSTS;
 }
-export interface FetchPostsSuccessAction{
+interface FetchPostsSuccessAction{
     type: PostActionTypes.FETCH_POSTS_SUCCESS;
     payload: PostProps[];
 }
-export interface FetchPostsErrorAction{
+interface FetchPostsErrorAction{
     type: PostActionTypes.FETCH_POSTS_ERROR;
     payload: string;
 }

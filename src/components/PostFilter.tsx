@@ -7,7 +7,7 @@ interface PostFilterProps {
 }
 const PostFilter:React.FC<PostFilterProps> = ({filter, setFilter}) => {
     return (
-        <div>
+        <div style={{flex:1}}>
             <Select value={filter.sort} onChange={selectedSort => setFilter({...filter, sort: selectedSort})} defaultValue='Choose one'  options={[
                 {value:'title', title: 'name'},
                 {value:'body', title: 'description'},

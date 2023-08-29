@@ -41,7 +41,7 @@ const Home = ({ searchQuery }: { searchQuery: string }) => {
     const [page, setPage] = useState(1);
     const sortedAndSearchedPosts = usePosts(posts, filter.sort, searchQuery);
     const lastElement = useRef<HTMLDivElement | null>(null);
-    const hasPostsToLoad = sortedAndSearchedPosts.length > 0;
+    const hasPostsToLoad = sortedAndSearchedPosts.length < 0;
     const [postsPhoto, setPostsPhoto] = useState<string[]>([]);
 
 
@@ -51,7 +51,6 @@ const Home = ({ searchQuery }: { searchQuery: string }) => {
         const photoResponse = await PostService.getAllPhotos();
         const extractedUrls = photoResponse.data.map((photo: { url: string; }) => photo.url); // Извлекаем URL фотографий
         setPostsPhoto(extractedUrls);
-        console.log(photoResponse.data)
         setPosts([...posts, ...response.data ]);
         const totalCount = response.headers['x-total-count']
         setTotalPages(getPageCount(totalCount, limit));
