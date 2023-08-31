@@ -7,8 +7,20 @@ import AppRouter from "./components/AppRouter";
 import {AuthContext} from "./context";
 import {Provider} from "react-redux";
 import {store} from "./store";
+import Menu from "./components/Menu";
+import styled from "styled-components";
+import Flex from "./components/Flex";
+import Grid from "./components/Grid";
+
+export const MenuWrapper = styled.div`
+  justify-content: flex-end;
+  display: flex;
+  max-height: 300px;
+  padding: 20px;
+`
 
 function App() {
+
     const [isAuth, setIsAuth] = useState(false);
     const [isLoading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
@@ -24,7 +36,7 @@ function App() {
     }, [])
 
     return (
-    // <Provider store={store}>
+    <Provider store={store}>
             <AuthContext.Provider value={{
                 isAuth,
                 setIsAuth,
@@ -32,10 +44,13 @@ function App() {
             }}>
                 <BrowserRouter>
                     <Navigation onSearchQueryChange={handleSearchQueryChange}/>
-                    <AppRouter searchQuery={searchQuery}  />
+                    <Grid>
+                            <Menu />
+                        <AppRouter searchQuery={searchQuery}  />
+                    </Grid>
                 </BrowserRouter>
             </AuthContext.Provider>
-    // </Provider>
+    </Provider>
   );
 }
 

@@ -13,9 +13,9 @@ export const StyledPost = styled.div`
     padding:1rem;
     margin:1rem;
     width: 550px;
+    height: 611px;
     border: 1px solid black;
     border-radius: 25px;
-    height: fit-content;
     justify-content: center;
     word-break: break-all;
     background: linear-gradient(90deg, rgba(89, 83, 255, 0.8) 0%, rgba(135, 135, 212, 1) 50%, rgba(126, 199, 214, 1) 100%);

@@ -13,25 +13,10 @@ import {useObserver} from "../hooks/useObserver";
 import LoadingSpinner from "../UI/Loading Spinner/LoadingSpinner";
 
 
-const MenuWrapper = styled.div`
-  flex:1;
-  justify-content: flex-end;
-  display: flex;
-  max-height: 300px;
-  padding: 20px;
-`
-const PostsWrapper = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
+export const PostsWrapper = styled.div`
+  margin: 20px;
 `;
 
-const EmptySpace = styled.div`
-  flex: 1;
-`;
 
 const Home = ({ searchQuery }: { searchQuery: string }) => {
     const [posts, setPosts] = useState<PostProps[]>([]);
@@ -41,7 +26,7 @@ const Home = ({ searchQuery }: { searchQuery: string }) => {
     const [page, setPage] = useState(1);
     const sortedAndSearchedPosts = usePosts(posts, filter.sort, searchQuery);
     const lastElement = useRef<HTMLDivElement | null>(null);
-    const hasPostsToLoad = sortedAndSearchedPosts.length < 0;
+    const hasPostsToLoad = sortedAndSearchedPosts.length > 0;
     const [postsPhoto, setPostsPhoto] = useState<string[]>([]);
 
 
@@ -74,11 +59,10 @@ const Home = ({ searchQuery }: { searchQuery: string }) => {
 
 
     return (
-        <div>
-            <Flex justifyContent={'center'}>
-                <MenuWrapper>
-                    <Menu/>
-                </MenuWrapper>
+            <div>
+                {/*<MenuWrapper>*/}
+                {/*    <Menu/>*/}
+                {/*</MenuWrapper>*/}
                 <PostsWrapper>
                     <br/>
                     <React.Fragment>
@@ -91,13 +75,11 @@ const Home = ({ searchQuery }: { searchQuery: string }) => {
                             isPostsLoading={isPostsLoading}
                             postError={postError}
                         />
-                        {isPostsLoading && posts.length < 0 && <LoadingSpinner />}
+                        {isPostsLoading && posts.length > 0 && <LoadingSpinner />}
                     </React.Fragment>
                     <div ref={lastElement}></div>
                 </PostsWrapper>
-                <EmptySpace />
-            </Flex>
-        </div>
+            </div>
     );
 };
 

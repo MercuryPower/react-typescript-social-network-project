@@ -13,9 +13,11 @@ const StyledMenu = styled.div`
       padding: 0;
     }
   
+ 
+  
   button{
     width: 100%;
-    margin: 5px;
+    margin-top:0.5rem;
     height: 50px;
     border-radius: 5px;
   }
@@ -25,7 +27,7 @@ const Menu = () =>{
 
         const menuItems = [
             { icon: faUser, text:'My page', link:'/me'},
-            { icon: faNewspaper, text:'News', link:'/news'},
+            { icon: faNewspaper, text:'News', link:'/home'},
             { icon: faEnvelope, text:'Messages',link:'/messages'},
             { icon: faUserGroup, text:'Friends',link:'/friends'},
     ];
@@ -37,7 +39,7 @@ const Menu = () =>{
                         {menuItems.map((item, index) => (
                             <Li key={index}>
                                 <Link to={item.link}>
-                                    <Button color={'black'}>
+                                    <Button padding={'0'} withoutBorder color={'black'}>
                                         <FontAwesomeIcon icon={item.icon} /> {item.text}
                                     </Button>
                                 </Link>

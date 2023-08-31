@@ -14,6 +14,7 @@ interface StyledButtonProps{
     radius?:string;
     yesBtn?:boolean;
     noBtn?:boolean;
+    withoutBorder?:boolean;
     reversed?:boolean;
     children: React.ReactNode;
     onClick?:(e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -51,7 +52,6 @@ const StyledButton = styled.button<StyledButtonProps>`
     transition: ease-in 0.3s;
   }
     
-    
   ${props => props.yesBtn && css`
     background: rgba(102, 255, 102, 1) 50%;
   `}
@@ -59,6 +59,9 @@ const StyledButton = styled.button<StyledButtonProps>`
     background:rgba(255, 102, 102, 1) 50%;
   `}
   
+  ${props => props.withoutBorder && css`
+    box-shadow: none;
+  `}
 `;
 const Button = (props : StyledButtonProps) => {
     return <StyledButton{...props} />
