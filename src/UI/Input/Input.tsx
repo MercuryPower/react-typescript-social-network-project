@@ -9,7 +9,7 @@ interface StyledInputProps {
     placeholder?:string;
     value?:string;
     onChange?:(e: React.ChangeEvent<HTMLInputElement>) => void;
-    showPaperclip?: boolean;
+    showClip?: boolean;
 }
 const StyledInput = styled.input`
   outline: none;
@@ -62,9 +62,11 @@ const Input = (props : StyledInputProps) => {
     return (
         <StyledInputWrapper>
             <StyledInput {...props} onChange={handleInputChange} />
-            <FadeTransition in={showPaperclip} timeout={300} classNames="fade" unmountOnExit>
-                <PaperclipIcon icon={faPaperclip} size="lg" />
-            </FadeTransition>
+            {props.showClip &&
+                <FadeTransition in={showPaperclip} timeout={300} classNames="fade" unmountOnExit>
+                    <PaperclipIcon icon={faPaperclip} size="lg" />
+                </FadeTransition>
+            }
         </StyledInputWrapper>
     );
 };

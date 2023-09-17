@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, {keyframes} from "styled-components";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faRotateRight, faSearch} from "@fortawesome/free-solid-svg-icons";
+import {faRotateRight} from "@fortawesome/free-solid-svg-icons";
 
 const rotateAnimation = keyframes`
   0% {

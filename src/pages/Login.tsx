@@ -1,7 +1,6 @@
 import React, {useContext} from 'react';
 import Input from "../UI/Input/Input";
 import Button from "../UI/Button/Button";
-import Flex from "../components/Flex";
 import {AuthContext} from "../context";
 
 const Login = () => {
@@ -13,9 +12,9 @@ const Login = () => {
     }
     return (
         <div className={'login_block'}>
-                <div>
-                    <h1>Login</h1>
-                </div>
+                <React.Fragment>
+                    <h1>Sign In</h1>
+                </React.Fragment>
                 <div className={'login_block_form'}>
                     <form onSubmit={login}>
                         <Input type="text" placeholder={'Email'}></Input>

@@ -36,7 +36,7 @@ const CreateANewPost:React.FC<CreateANewPostProps> = ({create}) => {
                             placeholder={`What's new?`}
                             value={post.body}
                             onChange={(e:React.ChangeEvent<HTMLInputElement>) => setPost({...post, body: e.target.value})}
-                            showPaperclip
+                            showClip
                         />
                         <Button color={'white'} margin={'0rem 1rem'} small onClick={addNewPost} radius={'25px'} >
                             <FontAwesomeIcon icon={faCheck} size={'lg'}/>

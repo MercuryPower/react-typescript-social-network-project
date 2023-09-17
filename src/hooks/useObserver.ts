@@ -17,7 +17,7 @@ export const useObserver = (ref:React.RefObject<Element>,  canLoad:boolean, isLo
             observer.current.observe(ref.current);
         }
 
-    }, [callback, canLoad, hasPostsToLoad, isLoading, ref])
+    }, [callback])
 
 
 }

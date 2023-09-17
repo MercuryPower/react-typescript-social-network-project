@@ -3,6 +3,7 @@ import Home from "../../pages/Home";
 import PostPage from "../PostPage";
 import React from "react";
 import Login from "../../pages/Login";
+import Friends from "../../pages/Friends";
 
 interface RoutesConfig{
     path:string
@@ -14,6 +15,7 @@ export const privateRoutes : RoutesConfig[] = [
     {path: '/me', element: UserPage, exact: true },
     {path: '/home', element: Home, props:{searchQuery: ''},  exact: true },
     {path: '/home/:id', element: PostPage, exact: true },
+    {path: '/friends', element: Friends, exact: true },
 ]
 export const publicRoutes : RoutesConfig[] = [
     {path: '/login', element: Login, exact: true }

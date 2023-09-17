@@ -1,11 +1,8 @@
 import React, {useEffect, useRef, useState} from 'react';
-import Navigation from "../components/Navigation";
 import Flex from "../components/Flex";
 import Menu from "../components/Menu";
 import CreateANewPost from "../components/CreateANewPost";
-import PostFilter from "../components/PostFilter";
 import PostList from "../components/PostList";
-import Pagination from "../components/Pagination";
 import {usePosts} from "../hooks/usePosts";
 import {useFetching} from "../hooks/useFetching";
 import PostService from "../API/PostService";
@@ -14,28 +11,12 @@ import {PostProps} from "../components/Post";
 import styled from "styled-components";
 import {useObserver} from "../hooks/useObserver";
 import LoadingSpinner from "../UI/Loading Spinner/LoadingSpinner";
-import NoPosts from "../components/NoPosts";
 
 
-const MenuWrapper = styled.div`
-  flex:1;
-  justify-content: flex-end;
-  display: flex;
-  max-height: 300px;
-  padding: 20px;
-`
-const PostsWrapper = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
+export const PostsWrapper = styled.div`
+  margin: 20px;
 `;
 
-const EmptySpace = styled.div`
-  flex: 1;
-`;
 
 const Home = ({ searchQuery }: { searchQuery: string }) => {
     const [posts, setPosts] = useState<PostProps[]>([]);
@@ -55,7 +36,6 @@ const Home = ({ searchQuery }: { searchQuery: string }) => {
         const photoResponse = await PostService.getAllPhotos();
         const extractedUrls = photoResponse.data.map((photo: { url: string; }) => photo.url); // Извлекаем URL фотографий
         setPostsPhoto(extractedUrls);
-        console.log(photoResponse.data)
         setPosts([...posts, ...response.data ]);
         const totalCount = response.headers['x-total-count']
         setTotalPages(getPageCount(totalCount, limit));
@@ -79,14 +59,13 @@ const Home = ({ searchQuery }: { searchQuery: string }) => {
 
 
     return (
-        <div>
-            <Flex justifyContent={'center'}>
-                <MenuWrapper>
-                    <Menu/>
-                </MenuWrapper>
+            <div>
+                {/*<MenuWrapper>*/}
+                {/*    <Menu/>*/}
+                {/*</MenuWrapper>*/}
                 <PostsWrapper>
                     <br/>
-                    <div>
+                    <React.Fragment>
                         <CreateANewPost create={createPost} />
                         {/*<PostFilter filter={filter} setFilter={setFilter} />*/}
                         <PostList
@@ -97,12 +76,10 @@ const Home = ({ searchQuery }: { searchQuery: string }) => {
                             postError={postError}
                         />
                         {isPostsLoading && posts.length > 0 && <LoadingSpinner />}
-                    </div>
+                    </React.Fragment>
                     <div ref={lastElement}></div>
                 </PostsWrapper>
-                <EmptySpace />
-            </Flex>
-        </div>
+            </div>
     );
 };
 

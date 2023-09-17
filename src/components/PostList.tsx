@@ -5,7 +5,7 @@ import styled from "styled-components";
 import ErrorMessage from "./ErrorMessage";
 import NoPosts from "./NoPosts";
 import {format} from "date-fns";
-import PostService from "../API/PostService";
+
 
 const StyledTransitionGroup = styled(TransitionGroup)`
   .post-enter {
@@ -36,7 +36,9 @@ interface PostListProps {
 }
 
 
-const PostList = ({posts,photoUrls, remove,isPostsLoading, postError}: PostListProps)=> {
+const PostList = ({posts, photoUrls, remove,isPostsLoading, postError}: PostListProps)=> {
+
+    // const {posts, error, isLoading} = useTypedSelector(state => state.post);
 
 
     // if(isPostsLoading){
